@@ -1,0 +1,1904 @@
+// styles/indexStyles.ts
+import { Dimensions, StyleSheet } from "react-native";
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
+
+// ============ DESIGN TOKENS ============
+export const colors = {
+  // Primary - Deep Blue
+  primary: "#0052FF",
+  primaryDark: "#0039B3",
+  primaryLight: "#E6EFFF",
+  primaryGradientStart: "#0052FF",
+  primaryGradientEnd: "#00C6FF",
+
+  // Secondary - Slate
+  secondary: "#64748B",
+  secondaryDark: "#475569",
+  secondaryLight: "#F1F5F9",
+
+  // Accent - Violet
+  accent: "#7C3AED",
+  accentDark: "#5B21B6",
+  accentLight: "#EDE9FE",
+
+  // Success - Emerald
+  success: "#10B981",
+  successDark: "#059669",
+  successLight: "#D1FAE5",
+
+  // Warning - Amber
+  warning: "#F59E0B",
+  warningDark: "#D97706",
+  warningLight: "#FEF3C7",
+
+  // Danger - Rose
+  danger: "#EF4444",
+  dangerDark: "#DC2626",
+  dangerLight: "#FEE2E2",
+
+  // Neutral
+  neutral50: "#FAFAFA",
+  neutral100: "#F5F5F5",
+  neutral200: "#E5E5E5",
+  neutral300: "#D4D4D4",
+  neutral400: "#A3A3A3",
+  neutral500: "#737373",
+  neutral600: "#525252",
+  neutral700: "#404040",
+  neutral800: "#262626",
+  neutral900: "#171717",
+
+  // Base
+  white: "#FFFFFF",
+  black: "#000000",
+  background: "#FAFBFC",
+  surface: "#FFFFFF",
+  surfaceElevated: "#FFFFFF",
+  border: "#E2E8F0",
+  borderLight: "#F1F5F9",
+
+  // Text
+  textPrimary: "#0F172A",
+  textSecondary: "#475569",
+  textTertiary: "#94A3B8",
+  textInverse: "#FFFFFF",
+  textLink: "#0052FF",
+
+  // Overlays
+  overlay: "rgba(15, 23, 42, 0.6)",
+  overlayLight: "rgba(15, 23, 42, 0.1)",
+  overlayBlur: "rgba(255, 255, 255, 0.85)",
+
+  // Gradients (as string pairs for use)
+  gradientPrimary: ["#0052FF", "#00C6FF"],
+  gradientAccent: ["#7C3AED", "#EC4899"],
+  gradientSuccess: ["#10B981", "#34D399"],
+  gradientDark: ["#1E293B", "#0F172A"],
+
+  // Live
+  live: "#EF4444",
+  liveGlow: "rgba(239, 68, 68, 0.4)",
+};
+
+export const spacing = {
+  xxs: 2,
+  xs: 4,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 20,
+  xxl: 24,
+  xxxl: 32,
+  xxxxl: 40,
+  section: 48,
+};
+
+export const radius = {
+  xs: 4,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 20,
+  xxl: 24,
+  xxxl: 32,
+  full: 9999,
+};
+
+export const typography = {
+  // Font sizes
+  fontSizeXxs: 10,
+  fontSizeXs: 11,
+  fontSizeSm: 13,
+  fontSizeMd: 15,
+  fontSizeLg: 17,
+  fontSizeXl: 20,
+  fontSizeXxl: 24,
+  fontSizeXxxl: 32,
+  fontSizeDisplay: 40,
+
+  // Font weights
+  fontWeightNormal: "400" as const,
+  fontWeightMedium: "500" as const,
+  fontWeightSemibold: "600" as const,
+  fontWeightBold: "700" as const,
+  fontWeightBlack: "800" as const,
+
+  // Line heights
+  lineHeightTight: 1.2,
+  lineHeightNormal: 1.5,
+  lineHeightRelaxed: 1.65,
+
+  // Letter spacing
+  letterSpacingTight: -0.5,
+  letterSpacingNormal: 0,
+  letterSpacingWide: 0.5,
+};
+
+const shadowBase = {
+  shadowColor: colors.black,
+};
+
+export const shadows = {
+  xs: {
+    ...shadowBase,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  sm: {
+    ...shadowBase,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  md: {
+    ...shadowBase,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  lg: {
+    ...shadowBase,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
+    elevation: 8,
+  },
+  xl: {
+    ...shadowBase,
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.16,
+    shadowRadius: 24,
+    elevation: 12,
+  },
+  fab: {
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.35,
+    shadowRadius: 16,
+    elevation: 10,
+  },
+  glow: {
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    elevation: 8,
+  },
+  glowSuccess: {
+    shadowColor: colors.success,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    elevation: 8,
+  },
+};
+
+// ============ STYLES ============
+export const styles = StyleSheet.create({
+  // ===== CONTAINER =====
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollViewContent: {
+    paddingBottom: spacing.section,
+  },
+
+  // ===== ICONS =====
+  icon: {
+    // Feather utilise fontSize pour la taille
+  },
+  iconSM: {
+    fontSize: 16,
+  },
+  iconMD: {
+    fontSize: 20,
+  },
+  iconLG: {
+    fontSize: 24,
+  },
+  iconXL: {
+    fontSize: 32,
+  },
+  iconPrimary: {
+    color: colors.primary,
+  },
+  iconWhite: {
+    color: colors.white,
+  },
+
+  // ===== AVATAR =====
+  avatar: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: radius.full,
+    overflow: "hidden",
+  },
+  avatarSM: {
+    width: 32,
+    height: 32,
+  },
+  avatarMD: {
+    width: 44,
+    height: 44,
+  },
+  avatarLG: {
+    width: 64,
+    height: 64,
+  },
+  avatarXL: {
+    width: 80,
+    height: 80,
+  },
+  avatarImage: {
+    width: "100%",
+    height: "100%",
+  },
+  avatarFallback: {
+    backgroundColor: colors.primaryLight,
+  },
+  avatarText: {
+    color: colors.primary,
+    fontWeight: typography.fontWeightSemibold,
+  },
+  avatarTextSM: {
+    fontSize: typography.fontSizeXs,
+  },
+  avatarTextMD: {
+    fontSize: typography.fontSizeSm,
+  },
+  avatarTextLG: {
+    fontSize: typography.fontSizeLg,
+  },
+  avatarBorder: {
+    borderWidth: 2,
+    borderColor: colors.white,
+  },
+  avatarOnline: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    width: 12,
+    height: 12,
+    borderRadius: radius.full,
+    backgroundColor: colors.success,
+    borderWidth: 2,
+    borderColor: colors.white,
+  },
+
+  // ===== BADGE =====
+  badge: {
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderRadius: radius.sm,
+    alignSelf: "flex-start",
+  },
+  badgePrimary: {
+    backgroundColor: colors.primaryLight,
+  },
+  badgeSecondary: {
+    backgroundColor: colors.secondaryLight,
+  },
+  badgeSuccess: {
+    backgroundColor: colors.successLight,
+  },
+  badgeWarning: {
+    backgroundColor: colors.warningLight,
+  },
+  badgeDanger: {
+    backgroundColor: colors.dangerLight,
+  },
+  badgeNeutral: {
+    backgroundColor: colors.neutral100,
+  },
+  badgeAccent: {
+    backgroundColor: colors.accentLight,
+  },
+  badgeText: {
+    fontSize: typography.fontSizeXs,
+    fontWeight: typography.fontWeightSemibold,
+    letterSpacing: typography.letterSpacingWide,
+    textTransform: "uppercase",
+  },
+  badgeTextPrimary: {
+    color: colors.primary,
+  },
+  badgeTextSecondary: {
+    color: colors.secondary,
+  },
+  badgeTextSuccess: {
+    color: colors.successDark,
+  },
+  badgeTextWarning: {
+    color: colors.warningDark,
+  },
+  badgeTextDanger: {
+    color: colors.dangerDark,
+  },
+  badgeTextNeutral: {
+    color: colors.neutral600,
+  },
+  badgeTextAccent: {
+    color: colors.accentDark,
+  },
+
+  // ===== BUTTON =====
+  button: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: spacing.sm,
+    borderRadius: radius.lg,
+  },
+  buttonPrimary: {
+    backgroundColor: colors.primary,
+    ...shadows.glow,
+  },
+  buttonSecondary: {
+    backgroundColor: colors.neutral800,
+  },
+  buttonOutline: {
+    backgroundColor: "transparent",
+    borderWidth: 1.5,
+    borderColor: colors.border,
+  },
+  buttonGhost: {
+    backgroundColor: "transparent",
+  },
+  buttonAccent: {
+    backgroundColor: colors.accent,
+  },
+  buttonSuccess: {
+    backgroundColor: colors.success,
+    ...shadows.glowSuccess,
+  },
+  buttonSM: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.md,
+  },
+  buttonMD: {
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.md,
+  },
+  buttonLG: {
+    paddingHorizontal: spacing.xxl,
+    paddingVertical: spacing.lg,
+  },
+  buttonFullWidth: {
+    width: "100%",
+  },
+  buttonDisabled: {
+    opacity: 0.5,
+  },
+  buttonText: {
+    fontWeight: typography.fontWeightSemibold,
+    letterSpacing: typography.letterSpacingWide,
+  },
+  buttonTextPrimary: {
+    color: colors.textInverse,
+  },
+  buttonTextSecondary: {
+    color: colors.textInverse,
+  },
+  buttonTextOutline: {
+    color: colors.textPrimary,
+  },
+  buttonTextGhost: {
+    color: colors.primary,
+  },
+  buttonTextAccent: {
+    color: colors.textInverse,
+  },
+  buttonTextSuccess: {
+    color: colors.textInverse,
+  },
+  buttonTextSM: {
+    fontSize: typography.fontSizeSm,
+  },
+  buttonTextMD: {
+    fontSize: typography.fontSizeMd,
+  },
+  buttonTextLG: {
+    fontSize: typography.fontSizeLg,
+  },
+  buttonIconOnly: {
+    width: 44,
+    height: 44,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+  },
+
+  // ===== CARD =====
+  card: {
+    backgroundColor: colors.surface,
+    borderRadius: radius.xl,
+    padding: spacing.lg,
+    marginBottom: spacing.md,
+  },
+  cardDefault: {
+    borderWidth: 0,
+  },
+  cardElevated: {
+    ...shadows.md,
+  },
+  cardOutlined: {
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  cardGlass: {
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.2)",
+  },
+  cardDark: {
+    backgroundColor: colors.neutral900,
+  },
+  cardGradient: {
+    overflow: "hidden",
+  },
+  cardImage: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderRadius: radius.xl,
+  },
+  cardImageOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: colors.overlay,
+    borderRadius: radius.xl,
+  },
+
+  // ===== SECTION =====
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: spacing.lg,
+    marginTop: spacing.xxl,
+    paddingHorizontal: spacing.lg,
+  },
+  sectionHeaderCompact: {
+    marginTop: spacing.lg,
+    marginBottom: spacing.md,
+  },
+  sectionTitle: {
+    fontSize: typography.fontSizeXl,
+    fontWeight: typography.fontWeightBold,
+    color: colors.textPrimary,
+    letterSpacing: typography.letterSpacingTight,
+  },
+  sectionSubtitle: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+    marginTop: spacing.xs,
+  },
+  sectionAction: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+    paddingVertical: spacing.xs,
+    paddingHorizontal: spacing.sm,
+    borderRadius: radius.md,
+    backgroundColor: colors.neutral100,
+  },
+  sectionActionText: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+    fontWeight: typography.fontWeightMedium,
+  },
+
+  // ===== DIVIDER =====
+  divider: {
+    height: 1,
+    backgroundColor: colors.border,
+    marginVertical: spacing.lg,
+  },
+  dividerLight: {
+    backgroundColor: colors.borderLight,
+  },
+  dividerSection: {
+    height: 8,
+    backgroundColor: colors.neutral100,
+    marginVertical: spacing.xxl,
+  },
+
+  // ===== SEGMENTED CONTROL =====
+  segmentedControl: {
+    flexDirection: "row",
+    backgroundColor: colors.neutral100,
+    borderRadius: radius.lg,
+    padding: spacing.xs,
+  },
+  segmentedOption: {
+    flex: 1,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
+    alignItems: "center",
+    borderRadius: radius.md,
+  },
+  segmentedOptionActive: {
+    backgroundColor: colors.surface,
+    ...shadows.sm,
+  },
+  segmentedOptionText: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+    fontWeight: typography.fontWeightMedium,
+  },
+  segmentedOptionTextActive: {
+    color: colors.textPrimary,
+    fontWeight: typography.fontWeightSemibold,
+  },
+
+  // ===== POST CARD =====
+  postCard: {
+    backgroundColor: colors.surface,
+    borderRadius: radius.xl,
+    padding: spacing.lg,
+    marginBottom: spacing.md,
+    marginHorizontal: spacing.lg,
+    ...shadows.sm,
+  },
+  postHeader: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    marginBottom: spacing.md,
+  },
+  postAuthorContainer: {
+    flex: 1,
+    marginLeft: spacing.md,
+  },
+  postAuthorRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
+  },
+  postAuthor: {
+    fontSize: typography.fontSizeMd,
+    fontWeight: typography.fontWeightSemibold,
+    color: colors.textPrimary,
+  },
+  postVerified: {
+    width: 16,
+    height: 16,
+    borderRadius: radius.full,
+    backgroundColor: colors.primary,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  postTimestamp: {
+    fontSize: typography.fontSizeXs,
+    color: colors.textTertiary,
+    marginTop: spacing.xxs,
+  },
+  postMoreButton: {
+    padding: spacing.sm,
+    marginRight: -spacing.sm,
+    marginTop: -spacing.sm,
+  },
+  postContent: {
+    fontSize: typography.fontSizeMd,
+    color: colors.textPrimary,
+    lineHeight: typography.fontSizeMd * typography.lineHeightRelaxed,
+    marginBottom: spacing.md,
+  },
+  postImage: {
+    width: "100%",
+    height: 200,
+    borderRadius: radius.lg,
+    marginBottom: spacing.md,
+    backgroundColor: colors.neutral100,
+  },
+  postStats: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.lg,
+    paddingBottom: spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.borderLight,
+    marginBottom: spacing.md,
+  },
+  postStatItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+  },
+  postStatText: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+  },
+  postActions: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  postActionButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.md,
+    borderRadius: radius.md,
+  },
+  postActionButtonActive: {
+    backgroundColor: colors.dangerLight,
+  },
+  postActionText: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+    fontWeight: typography.fontWeightMedium,
+  },
+  postActionTextActive: {
+    color: colors.danger,
+  },
+
+  // ===== PORTFOLIO =====
+  portfolioContainer: {
+    marginHorizontal: spacing.lg,
+  },
+  portfolioHeader: {
+    marginBottom: spacing.lg,
+  },
+  portfolioTotalLabel: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+    marginBottom: spacing.xs,
+  },
+  portfolioTotalValue: {
+    fontSize: typography.fontSizeXxxl,
+    fontWeight: typography.fontWeightBold,
+    color: colors.textPrimary,
+    letterSpacing: typography.letterSpacingTight,
+  },
+  portfolioTotalChange: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+    marginTop: spacing.xs,
+  },
+  portfolioRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.borderLight,
+  },
+  portfolioRowLast: {
+    borderBottomWidth: 0,
+  },
+  portfolioProjectImage: {
+    width: 48,
+    height: 48,
+    borderRadius: radius.lg,
+    backgroundColor: colors.neutral100,
+  },
+  portfolioProjectInfo: {
+    flex: 1,
+    marginLeft: spacing.md,
+  },
+  portfolioProjectName: {
+    fontSize: typography.fontSizeMd,
+    fontWeight: typography.fontWeightSemibold,
+    color: colors.textPrimary,
+  },
+  portfolioShares: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+    marginTop: spacing.xxs,
+  },
+  portfolioValues: {
+    alignItems: "flex-end",
+  },
+  portfolioValue: {
+    fontSize: typography.fontSizeMd,
+    fontWeight: typography.fontWeightSemibold,
+    color: colors.textPrimary,
+  },
+  portfolioVariationContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+    marginTop: spacing.xs,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xxs,
+    borderRadius: radius.sm,
+  },
+  variationPositive: {
+    backgroundColor: colors.successLight,
+  },
+  variationNegative: {
+    backgroundColor: colors.dangerLight,
+  },
+  portfolioVariation: {
+    fontSize: typography.fontSizeSm,
+    fontWeight: typography.fontWeightSemibold,
+  },
+  textPositive: {
+    color: colors.successDark,
+  },
+  textNegative: {
+    color: colors.dangerDark,
+  },
+  portfolioTitle: {
+    fontSize: typography.fontSizeLg,
+    fontWeight: typography.fontWeightSemibold,
+    color: colors.textPrimary,
+    marginBottom: spacing.md,
+  },
+
+  // ===== LIVE CARD =====
+  liveCard: {
+    width: 300,
+    backgroundColor: colors.surface,
+    borderRadius: radius.xl,
+    overflow: "hidden",
+    ...shadows.md,
+  },
+  liveCardImage: {
+    width: "100%",
+    height: 160,
+    backgroundColor: colors.neutral200,
+  },
+  liveCardImageOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    justifyContent: "space-between",
+    padding: spacing.md,
+  },
+  liveCardHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  liveBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+    backgroundColor: colors.danger,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderRadius: radius.sm,
+  },
+  liveDot: {
+    width: 6,
+    height: 6,
+    borderRadius: radius.full,
+    backgroundColor: colors.white,
+  },
+  liveBadgeText: {
+    fontSize: typography.fontSizeXs,
+    fontWeight: typography.fontWeightBold,
+    color: colors.white,
+    letterSpacing: typography.letterSpacingWide,
+  },
+  liveViewers: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderRadius: radius.sm,
+  },
+  liveViewersText: {
+    fontSize: typography.fontSizeXs,
+    fontWeight: typography.fontWeightMedium,
+    color: colors.white,
+  },
+  liveCardContent: {
+    padding: spacing.lg,
+  },
+  liveTitle: {
+    fontSize: typography.fontSizeLg,
+    fontWeight: typography.fontWeightSemibold,
+    color: colors.textPrimary,
+    marginBottom: spacing.xs,
+  },
+  liveStartupRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
+    marginBottom: spacing.md,
+  },
+  liveStartupAvatar: {
+    width: 24,
+    height: 24,
+    borderRadius: radius.full,
+    backgroundColor: colors.neutral200,
+  },
+  liveStartup: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+  },
+  liveDetails: {
+    flexDirection: "row",
+    gap: spacing.lg,
+    marginBottom: spacing.md,
+  },
+  liveDetailItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+  },
+  liveDetailText: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+  },
+
+  // ===== REPLAY CARD =====
+  replayCard: {
+    width: 280,
+    backgroundColor: colors.surface,
+    borderRadius: radius.xl,
+    overflow: "hidden",
+    ...shadows.sm,
+  },
+  replayThumbnail: {
+    height: 140,
+    backgroundColor: colors.neutral200,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+  },
+  replayThumbnailImage: {
+    width: "100%",
+    height: "100%",
+  },
+  replayPlayButton: {
+    position: "absolute",
+    width: 56,
+    height: 56,
+    borderRadius: radius.full,
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    alignItems: "center",
+    justifyContent: "center",
+    ...shadows.lg,
+  },
+  replayDuration: {
+    position: "absolute",
+    bottom: spacing.sm,
+    right: spacing.sm,
+    backgroundColor: "rgba(0, 0, 0, 0.75)",
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xxs,
+    borderRadius: radius.xs,
+  },
+  replayDurationText: {
+    fontSize: typography.fontSizeXs,
+    fontWeight: typography.fontWeightMedium,
+    color: colors.white,
+  },
+  replayInfo: {
+    padding: spacing.md,
+  },
+  replayTitle: {
+    fontSize: typography.fontSizeMd,
+    fontWeight: typography.fontWeightSemibold,
+    color: colors.textPrimary,
+    marginBottom: spacing.xs,
+  },
+  replayStartup: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+    marginBottom: spacing.sm,
+  },
+  replayMeta: {
+    flexDirection: "row",
+    gap: spacing.md,
+  },
+  replayMetaItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+  },
+  replayMetaText: {
+    fontSize: typography.fontSizeXs,
+    color: colors.textTertiary,
+  },
+
+  // ===== MAIL =====
+  mailContainer: {
+    marginHorizontal: spacing.lg,
+  },
+  mailRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.borderLight,
+  },
+  mailUnread: {
+    backgroundColor: colors.primaryLight,
+    marginHorizontal: -spacing.lg,
+    paddingHorizontal: spacing.lg,
+    borderRadius: radius.md,
+  },
+  mailIconContainer: {
+    width: 44,
+    height: 44,
+    borderRadius: radius.lg,
+    backgroundColor: colors.neutral100,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  mailIconContainerUnread: {
+    backgroundColor: colors.primary,
+  },
+  mailContent: {
+    flex: 1,
+    marginLeft: spacing.md,
+  },
+  mailSubject: {
+    fontSize: typography.fontSizeMd,
+    color: colors.textPrimary,
+    marginBottom: spacing.xxs,
+  },
+  mailSubjectUnread: {
+    fontWeight: typography.fontWeightSemibold,
+  },
+  mailProject: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+  },
+  mailMeta: {
+    alignItems: "flex-end",
+    gap: spacing.xs,
+  },
+  mailDate: {
+    fontSize: typography.fontSizeXs,
+    color: colors.textTertiary,
+  },
+  mailUnreadDot: {
+    width: 8,
+    height: 8,
+    borderRadius: radius.full,
+    backgroundColor: colors.primary,
+  },
+  mailSection: {
+    marginBottom: spacing.lg,
+  },
+  mailHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: spacing.lg,
+  },
+  mailHeaderLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.md,
+  },
+  mailIconLarge: {
+    width: 52,
+    height: 52,
+    borderRadius: radius.xl,
+    backgroundColor: colors.primaryLight,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  mailHeaderTitle: {
+    fontSize: typography.fontSizeLg,
+    fontWeight: typography.fontWeightSemibold,
+    color: colors.textPrimary,
+  },
+  mailHeaderSubtitle: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+  },
+  mailCountBadge: {
+    backgroundColor: colors.danger,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    borderRadius: radius.full,
+  },
+  mailCountText: {
+    fontSize: typography.fontSizeSm,
+    fontWeight: typography.fontWeightBold,
+    color: colors.textInverse,
+  },
+  mailList: {
+    marginBottom: spacing.md,
+  },
+
+  // ===== PROJECT CARD =====
+  projectCard: {
+    backgroundColor: colors.surface,
+    borderRadius: radius.xl,
+    overflow: "hidden",
+    marginBottom: spacing.md,
+    marginHorizontal: spacing.lg,
+    ...shadows.md,
+  },
+  projectImageContainer: {
+    height: 180,
+    position: "relative",
+  },
+  projectImage: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: colors.neutral200,
+  },
+  projectImageOverlay: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 80,
+  },
+  projectFavoriteButton: {
+    position: "absolute",
+    top: spacing.md,
+    right: spacing.md,
+    width: 36,
+    height: 36,
+    borderRadius: radius.full,
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    alignItems: "center",
+    justifyContent: "center",
+    ...shadows.sm,
+  },
+  projectContent: {
+    padding: spacing.lg,
+  },
+  projectHeader: {
+    marginBottom: spacing.md,
+  },
+  projectName: {
+    fontSize: typography.fontSizeXl,
+    fontWeight: typography.fontWeightBold,
+    color: colors.textPrimary,
+    marginBottom: spacing.xs,
+  },
+  projectLocation: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+  },
+  projectCity: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+  },
+  projectTags: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: spacing.sm,
+    marginBottom: spacing.lg,
+  },
+  projectProgress: {
+    marginBottom: spacing.lg,
+  },
+  projectProgressHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: spacing.sm,
+  },
+  projectProgressPercent: {
+    fontSize: typography.fontSizeLg,
+    fontWeight: typography.fontWeightBold,
+    color: colors.primary,
+  },
+  projectProgressAmount: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+  },
+  projectProgressBar: {
+    height: 8,
+    backgroundColor: colors.neutral100,
+    borderRadius: radius.full,
+    overflow: "hidden",
+  },
+  projectProgressFill: {
+    height: "100%",
+    backgroundColor: colors.primary,
+    borderRadius: radius.full,
+  },
+  projectProgressInfo: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: spacing.sm,
+  },
+  projectProgressLabel: {
+    fontSize: typography.fontSizeXs,
+    color: colors.textTertiary,
+  },
+  projectInvestors: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: spacing.lg,
+  },
+  projectInvestorAvatars: {
+    flexDirection: "row",
+    marginRight: spacing.sm,
+  },
+  projectInvestorAvatar: {
+    width: 28,
+    height: 28,
+    borderRadius: radius.full,
+    borderWidth: 2,
+    borderColor: colors.white,
+    marginLeft: -8,
+    backgroundColor: colors.neutral200,
+  },
+  projectInvestorAvatarFirst: {
+    marginLeft: 0,
+  },
+  projectInvestorCount: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+  },
+  projectActions: {
+    flexDirection: "row",
+    gap: spacing.md,
+  },
+  projectActionPrimary: {
+    flex: 2,
+  },
+  projectActionSecondary: {
+    flex: 1,
+  },
+
+  // ===== CHART =====
+  chartWrapper: {
+    marginVertical: spacing.md,
+  },
+  chartContainer: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "space-between",
+    height: 140,
+    paddingHorizontal: spacing.sm,
+  },
+  chartBarWrapper: {
+    flex: 1,
+    alignItems: "center",
+    paddingHorizontal: spacing.xxs,
+  },
+  chartBarContainer: {
+    flex: 1,
+    width: "100%",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  chartBar: {
+    width: "70%",
+    backgroundColor: colors.primary,
+    borderRadius: radius.sm,
+    minHeight: 4,
+  },
+  chartBarActive: {
+    backgroundColor: colors.primaryDark,
+  },
+  chartLabel: {
+    fontSize: typography.fontSizeXxs,
+    color: colors.textTertiary,
+    marginTop: spacing.sm,
+  },
+  chartTitle: {
+    fontSize: typography.fontSizeMd,
+    fontWeight: typography.fontWeightSemibold,
+    color: colors.textPrimary,
+    marginBottom: spacing.sm,
+  },
+
+  // ===== MAP =====
+  mapPreview: {
+    marginBottom: spacing.lg,
+    marginHorizontal: spacing.lg,
+  },
+  mapContainer: {
+    height: 220,
+    backgroundColor: colors.neutral100,
+    borderRadius: radius.xl,
+    overflow: "hidden",
+    ...shadows.sm,
+  },
+  mapImage: {
+    width: "100%",
+    height: "100%",
+  },
+  mapLegend: {
+    position: "absolute",
+    bottom: spacing.md,
+    left: spacing.md,
+    right: spacing.md,
+    backgroundColor: colors.white,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+    borderRadius: radius.lg,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    ...shadows.md,
+  },
+  mapLegendLeft: {
+    flex: 1,
+  },
+  mapLegendText: {
+    fontSize: typography.fontSizeMd,
+    fontWeight: typography.fontWeightSemibold,
+    color: colors.textPrimary,
+  },
+  mapLegendCount: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+  },
+  mapSection: {
+    marginBottom: spacing.lg,
+  },
+  mapExpandButton: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    backgroundColor: colors.primary,
+    borderRadius: radius.md,
+  },
+  mapExpandButtonText: {
+    fontSize: typography.fontSizeSm,
+    fontWeight: typography.fontWeightSemibold,
+    color: colors.white,
+  },
+
+  // ===== STAT CARD =====
+  statCard: {
+    flex: 1,
+    backgroundColor: colors.surface,
+    borderRadius: radius.xl,
+    padding: spacing.lg,
+    ...shadows.sm,
+  },
+  statCardGradient: {
+    overflow: "hidden",
+  },
+  statCardDark: {
+    backgroundColor: colors.neutral900,
+  },
+  statIconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: radius.lg,
+    backgroundColor: colors.primaryLight,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: spacing.md,
+  },
+  statLabel: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+    marginBottom: spacing.xs,
+  },
+  statLabelLight: {
+    color: "rgba(255, 255, 255, 0.7)",
+  },
+  statValue: {
+    fontSize: typography.fontSizeXxl,
+    fontWeight: typography.fontWeightBold,
+    color: colors.textPrimary,
+    letterSpacing: typography.letterSpacingTight,
+  },
+  statValueLight: {
+    color: colors.white,
+  },
+  statSubValueContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+    marginTop: spacing.xs,
+  },
+  statSubValue: {
+    fontSize: typography.fontSizeSm,
+    fontWeight: typography.fontWeightSemibold,
+  },
+
+  // ===== HEADER & SEARCH (REFONTE ERGONOMIQUE) =====
+  header: {
+    backgroundColor: colors.surface,
+    paddingBottom: spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+    // Note: paddingTop is handled dynamically in the component now for StatusBar
+  },
+  headerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: spacing.lg,
+    gap: spacing.sm,
+  },
+  searchInputWrapper: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.neutral100,
+    borderRadius: radius.lg,
+    paddingHorizontal: spacing.md,
+    height: 44,
+  },
+  searchInput: {
+    flex: 1,
+    marginLeft: spacing.sm,
+    fontSize: typography.fontSizeMd,
+    color: colors.textPrimary,
+    height: "100%",
+  },
+  notificationButton: {
+    width: 44,
+    height: 44,
+    borderRadius: radius.lg,
+    backgroundColor: colors.neutral100,
+    alignItems: "center",
+    justifyContent: "center",
+    position: 'relative',
+  },
+  notificationBadge: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+    width: 10,
+    height: 10,
+    borderRadius: radius.full,
+    backgroundColor: colors.danger,
+    borderWidth: 2,
+    borderColor: colors.neutral100,
+  },
+  notificationBadgeText: {
+    display: 'none',
+  },
+
+  // ===== HERO SECTION (NEW DESIGN MODERN TILES) =====
+  heroSection: {
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.lg,
+  },
+  heroCard: {
+    borderRadius: radius.xxl,
+    overflow: "hidden",
+    padding: spacing.lg,
+    ...shadows.xl,
+  },
+  heroTopContent: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: spacing.xl,
+  },
+  heroTextContainer: {
+    flex: 1,
+    paddingRight: spacing.md,
+    justifyContent: 'center',
+  },
+  heroBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(124, 58, 237, 0.2)",
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 4,
+    borderRadius: radius.full,
+    alignSelf: "flex-start",
+    marginBottom: spacing.md,
+    borderWidth: 1,
+    borderColor: "rgba(124, 58, 237, 0.3)",
+  },
+  heroBadgeText: {
+    fontSize: 10,
+    fontWeight: typography.fontWeightBold,
+    color: colors.accentLight,
+    marginLeft: spacing.xs,
+  },
+  heroTitle: {
+    fontSize: 26, 
+    fontWeight: typography.fontWeightBlack, 
+    color: colors.white,
+    marginBottom: spacing.sm,
+    letterSpacing: -0.5,
+    lineHeight: 32,
+  },
+  heroSubtitle: {
+    fontSize: typography.fontSizeSm,
+    color: "rgba(255, 255, 255, 0.7)",
+    marginBottom: spacing.lg,
+    lineHeight: 20,
+  },
+  heroCTA: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.white,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.lg,
+    borderRadius: radius.full,
+    alignSelf: "flex-start",
+    gap: spacing.xs,
+    ...shadows.lg,
+  },
+  heroCTAText: {
+    fontSize: typography.fontSizeSm,
+    fontWeight: typography.fontWeightBold,
+    color: colors.primaryDark,
+  },
+  
+  // HERO GRID TILES
+  heroGridContainer: {
+    flexDirection: "row",
+    gap: spacing.sm,
+    marginLeft: spacing.xs,
+  },
+  heroGridColumn: {
+    justifyContent: "center",
+  },
+  heroImageCard: {
+    width: 60,
+    height: 70,
+    borderRadius: radius.lg,
+    overflow: "hidden",
+    position: 'relative',
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.2)",
+    ...shadows.md,
+  },
+  heroImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
+  heroMiniLogo: {
+    position: 'absolute',
+    bottom: 4,
+    right: 4,
+    width: 16,
+    height: 16,
+    borderRadius: radius.full,
+    backgroundColor: colors.white,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  heroMiniLogoText: {
+    fontSize: 8,
+    fontWeight: 'bold',
+    color: colors.primary,
+  },
+  heroStatFloating: {
+    width: 60,
+    height: 60,
+    borderRadius: radius.lg,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.2)",
+  },
+  heroStatFloatingValue: {
+    fontSize: 14,
+    fontWeight: typography.fontWeightBold,
+    color: colors.white,
+  },
+  heroStatFloatingLabel: {
+    fontSize: 8,
+    color: "rgba(255,255,255,0.7)",
+  },
+
+  // HERO KPI (BOTTOM)
+  heroKPIContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.08)",
+    borderRadius: radius.xl,
+    padding: spacing.md,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.1)",
+  },
+  heroKPIItem: {
+    alignItems: "center",
+    flex: 1,
+  },
+  heroKPIValue: {
+    fontSize: typography.fontSizeMd,
+    fontWeight: typography.fontWeightBold,
+    color: colors.white,
+  },
+  heroKPILabel: {
+    fontSize: 10,
+    color: "rgba(255, 255, 255, 0.6)",
+    marginTop: 2,
+  },
+  heroKPIDivider: {
+    width: 1,
+    height: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.15)",
+  },
+
+  // ===== NAVIGATION =====
+  navigation: {
+    backgroundColor: colors.surface,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  navigationContent: {
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+    gap: spacing.xs,
+  },
+  navTab: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.md,
+    borderRadius: radius.lg,
+    gap: spacing.xs,
+  },
+  navTabActive: {
+    backgroundColor: colors.primary,
+  },
+  navTabText: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+    fontWeight: typography.fontWeightMedium,
+  },
+  navTabTextActive: {
+    color: colors.white,
+    fontWeight: typography.fontWeightSemibold,
+  },
+  navBadge: {
+    backgroundColor: colors.danger,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 2,
+    borderRadius: radius.full,
+    marginLeft: spacing.xs,
+  },
+  navBadgeText: {
+    fontSize: typography.fontSizeXxs,
+    fontWeight: typography.fontWeightBold,
+    color: colors.textInverse,
+  },
+
+  // ===== FEED =====
+  feedContent: {
+    paddingTop: spacing.md,
+  },
+
+  // ===== DASHBOARD =====
+  dashboardSection: {
+    paddingVertical: spacing.md,
+  },
+  statsRow: {
+    flexDirection: "row",
+    gap: spacing.md,
+    marginBottom: spacing.md,
+    paddingHorizontal: spacing.lg,
+  },
+  dashboardActions: {
+    gap: spacing.md,
+    marginTop: spacing.md,
+    paddingHorizontal: spacing.lg,
+  },
+  actionsRow: {
+    flexDirection: "row",
+    gap: spacing.md,
+  },
+
+  // ===== LIVE REPLAY SECTION =====
+  liveReplaySection: {
+    paddingVertical: spacing.md,
+  },
+  horizontalScroll: {
+    paddingHorizontal: spacing.lg,
+    gap: spacing.md,
+  },
+  horizontalCard: {
+    marginRight: spacing.md,
+  },
+
+  // ===== PLACEHOLDER =====
+  placeholderSection: {
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.section,
+    alignItems: "center",
+    gap: spacing.lg,
+  },
+  placeholderIcon: {
+    width: 80,
+    height: 80,
+    borderRadius: radius.xxl,
+    backgroundColor: colors.neutral100,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: spacing.md,
+  },
+  placeholderTitle: {
+    fontSize: typography.fontSizeXxl,
+    fontWeight: typography.fontWeightBold,
+    color: colors.textPrimary,
+  },
+  placeholderText: {
+    fontSize: typography.fontSizeMd,
+    color: colors.textSecondary,
+    textAlign: "center",
+    maxWidth: 280,
+  },
+
+  // ===== FOOTER =====
+  footer: {
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.xxxl,
+    alignItems: "center",
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+    marginTop: spacing.xxl,
+    backgroundColor: colors.neutral50,
+  },
+  footerLogo: {
+    width: 48,
+    height: 48,
+    borderRadius: radius.lg,
+    backgroundColor: colors.neutral900,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: spacing.md,
+  },
+  footerLogoText: {
+    fontSize: typography.fontSizeMd,
+    fontWeight: typography.fontWeightBold,
+    color: colors.white,
+  },
+  footerText: {
+    fontSize: typography.fontSizeMd,
+    fontWeight: typography.fontWeightSemibold,
+    color: colors.textPrimary,
+  },
+  footerSubtext: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+    marginTop: spacing.xs,
+  },
+  footerLinks: {
+    flexDirection: "row",
+    gap: spacing.xl,
+    marginTop: spacing.lg,
+  },
+  footerLink: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+  },
+  footerCopyright: {
+    fontSize: typography.fontSizeXs,
+    color: colors.textTertiary,
+    marginTop: spacing.xl,
+  },
+
+  // ===== STORY SECTION =====
+  storiesSection: {
+    paddingVertical: spacing.lg,
+  },
+  storiesScroll: {
+    paddingHorizontal: spacing.lg,
+  },
+  storyItem: {
+    alignItems: "center",
+    marginRight: spacing.lg,
+  },
+  storyRing: {
+    width: 72,
+    height: 72,
+    borderRadius: radius.full,
+    padding: 3,
+    marginBottom: spacing.sm,
+  },
+  storyRingActive: {
+    borderWidth: 2,
+    borderColor: colors.primary,
+  },
+  storyRingViewed: {
+    borderWidth: 2,
+    borderColor: colors.neutral300,
+  },
+  storyAvatar: {
+    width: "100%",
+    height: "100%",
+    borderRadius: radius.full,
+    backgroundColor: colors.neutral200,
+  },
+  storyLabel: {
+    fontSize: typography.fontSizeXs,
+    color: colors.textSecondary,
+    maxWidth: 64,
+    textAlign: "center",
+  },
+  storyLabelActive: {
+    color: colors.textPrimary,
+    fontWeight: typography.fontWeightMedium,
+  },
+
+  // ===== TRENDING SECTION =====
+  trendingSection: {
+    paddingHorizontal: spacing.lg,
+    marginBottom: spacing.lg,
+  },
+  trendingCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.surface,
+    borderRadius: radius.xl,
+    padding: spacing.md,
+    marginBottom: spacing.sm,
+    ...shadows.sm,
+  },
+  trendingRank: {
+    width: 32,
+    height: 32,
+    borderRadius: radius.md,
+    backgroundColor: colors.neutral100,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: spacing.md,
+  },
+  trendingRankTop: {
+    backgroundColor: colors.warningLight,
+  },
+  trendingRankText: {
+    fontSize: typography.fontSizeSm,
+    fontWeight: typography.fontWeightBold,
+    color: colors.textSecondary,
+  },
+  trendingRankTextTop: {
+    color: colors.warningDark,
+  },
+  trendingImage: {
+    width: 48,
+    height: 48,
+    borderRadius: radius.lg,
+    backgroundColor: colors.neutral200,
+    marginRight: spacing.md,
+  },
+  trendingInfo: {
+    flex: 1,
+  },
+  trendingName: {
+    fontSize: typography.fontSizeMd,
+    fontWeight: typography.fontWeightSemibold,
+    color: colors.textPrimary,
+  },
+  trendingMeta: {
+    fontSize: typography.fontSizeSm,
+    color: colors.textSecondary,
+    marginTop: spacing.xxs,
+  },
+  trendingChange: {
+    alignItems: "flex-end",
+  },
+  trendingChangeValue: {
+    fontSize: typography.fontSizeMd,
+    fontWeight: typography.fontWeightSemibold,
+  },
+  trendingChangeLabel: {
+    fontSize: typography.fontSizeXs,
+    color: colors.textTertiary,
+    marginTop: spacing.xxs,
+  },
+
+  // ===== GEO SELECTOR =====
+  geoSelector: {
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+  },
+
+  // ===== BACK BUTTON =====
+  backButtonContainer: {
+    padding: spacing.md,
+    backgroundColor: colors.white,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+
+  // ===== SMART FAB (Bouton Intelligent) =====
+  fabContainer: {
+    position: "absolute",
+    bottom: 30,
+    right: 20,
+    alignItems: "center",
+    zIndex: 999,
+  },
+  fabOverlay: {
+    position: 'absolute',
+    bottom: -100,
+    right: -100,
+    width: SCREEN_WIDTH * 2,
+    height: SCREEN_HEIGHT * 2,
+    backgroundColor: colors.overlayBlur,
+    zIndex: 0,
+  },
+  fabActionsContainer: {
+    position: 'absolute',
+    bottom: 70,
+    right: 0,
+    alignItems: 'flex-end',
+    zIndex: 1,
+  },
+  fabActionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+    marginRight: 4,
+  },
+  fabActionLabelContainer: {
+    backgroundColor: colors.white,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+    marginRight: 12,
+    ...shadows.sm,
+  },
+  fabActionLabel: {
+    fontSize: typography.fontSizeSm,
+    fontWeight: typography.fontWeightSemibold,
+    color: colors.textPrimary,
+  },
+  fabActionButton: {
+    width: 44,
+    height: 44,
+    borderRadius: radius.full,
+    justifyContent: 'center',
+    alignItems: 'center',
+    ...shadows.md,
+  },
+  fabWrapper: {
+    zIndex: 2,
+    ...shadows.fab,
+  },
+  fab: {
+    width: 56,
+    height: 56,
+    borderRadius: radius.full,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
+
+export const scrollTopStyles = StyleSheet.create({
+  button: {
+    position: "absolute",
+    bottom: 110, // Juste au-dessus du Smart FAB (qui est à bottom: 30 + hauteur)
+    right: 28,   // Alignement visuel avec le centre du FAB
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: colors.white,
+    alignItems: "center",
+    justifyContent: "center",
+    // Ombre douce pour le détacher du fond
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3.84,
+    elevation: 5,
+    zIndex: 900, // En dessous du FAB (999) mais au dessus du contenu
+    borderWidth: 1,
+    borderColor: colors.borderLight,
+  },
+});
