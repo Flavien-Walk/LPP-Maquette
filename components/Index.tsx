@@ -220,7 +220,6 @@ const IMAGES = {
     "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=400&fit=crop", // 4: BioFood
     "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop", // 5: VirtualEst
   ],
-  // CORRECTION: Ajout de la propriété 'projects' pour résoudre l'erreur TS
   projects: [
     "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=400&fit=crop", // GreenTech
     "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&h=400&fit=crop", // Food/Bio
@@ -287,7 +286,7 @@ const MOCK_POSTS: Post[] = [
     id: "1",
     type: "startup",
     author: "GreenTech Lyon",
-    avatarUrl: IMAGES.startups[0], // UTILISE LE LOGO STARTUP
+    avatarUrl: IMAGES.startups[0],
     content: "Nous venons d'atteindre 150% de notre objectif de levée. Un immense merci à tous nos investisseurs qui nous font confiance depuis le premier jour.",
     imageUrl: IMAGES.posts[0],
     likes: 234,
@@ -301,7 +300,7 @@ const MOCK_POSTS: Post[] = [
     id: "2",
     type: "investor",
     author: "Marie Dupont",
-    avatarUrl: IMAGES.avatars[5], // UTILISE LE NOUVEAU VISAGE UNIQUE
+    avatarUrl: IMAGES.avatars[5],
     content: "Premier investissement sur LPP dans une startup food-tech marseillaise. Le pitch était convaincant et l'équipe solide. Hâte de suivre leur évolution !",
     likes: 89,
     comments: 12,
@@ -314,7 +313,7 @@ const MOCK_POSTS: Post[] = [
     id: "3",
     type: "startup",
     author: "MedIA Diagnostics",
-    avatarUrl: IMAGES.startups[1], // UTILISE LE LOGO MedIA
+    avatarUrl: IMAGES.startups[1],
     content: "LIVE demain à 18h : présentation exclusive de notre solution IA pour le diagnostic médical. Inscrivez-vous pour ne pas manquer cette session Q&A avec notre équipe R&D.",
     imageUrl: IMAGES.posts[1],
     likes: 156,
@@ -1380,7 +1379,7 @@ const SmartActionFAB: React.FC = () => {
                     toggleMenu();
                   }}
                 >
-                   <Icon name={action.icon} size="md" color={action.textColor} />
+                    <Icon name={action.icon} size="md" color={action.textColor} />
                 </TouchableOpacity>
               </Animated.View>
             );
@@ -1560,7 +1559,11 @@ const Index: React.FC = () => {
               Accédez au capital des startups les plus ambitieuses. Investissez dès 100€.
             </Text>
             
-            <TouchableOpacity style={globalStyles.heroCTA} activeOpacity={0.8}>
+            <TouchableOpacity 
+              style={globalStyles.heroCTA} 
+              activeOpacity={0.8}
+              onPress={() => router.push("/marketplace")} // <--- MODIFICATION ICI
+            >
               <Text style={globalStyles.heroCTAText}>Explorer les pépites</Text>
               <Icon name="arrow-right" size="sm" color={colors.primary} />
             </TouchableOpacity>
@@ -1571,21 +1574,21 @@ const Index: React.FC = () => {
               <View style={[globalStyles.heroImageCard, { marginBottom: 12 }]}>
                 <Image source={{ uri: IMAGES.startups[0] }} style={globalStyles.heroImage} />
                 <View style={globalStyles.heroMiniLogo}>
-                   <Text style={globalStyles.heroMiniLogoText}>G</Text>
+                    <Text style={globalStyles.heroMiniLogoText}>G</Text>
                 </View>
               </View>
               <View style={globalStyles.heroImageCard}>
                 <Image source={{ uri: IMAGES.startups[1] }} style={globalStyles.heroImage} />
-                 <View style={globalStyles.heroMiniLogo}>
-                   <Text style={globalStyles.heroMiniLogoText}>F</Text>
+                  <View style={globalStyles.heroMiniLogo}>
+                    <Text style={globalStyles.heroMiniLogoText}>F</Text>
                 </View>
               </View>
             </View>
             <View style={[globalStyles.heroGridColumn, { marginTop: 24 }]}>
-               <View style={[globalStyles.heroImageCard, { marginBottom: 12 }]}>
+                <View style={[globalStyles.heroImageCard, { marginBottom: 12 }]}>
                 <Image source={{ uri: IMAGES.startups[2] }} style={globalStyles.heroImage} />
-                 <View style={globalStyles.heroMiniLogo}>
-                   <Text style={globalStyles.heroMiniLogoText}>M</Text>
+                  <View style={globalStyles.heroMiniLogo}>
+                    <Text style={globalStyles.heroMiniLogoText}>M</Text>
                 </View>
               </View>
               <View style={globalStyles.heroStatFloating}>
