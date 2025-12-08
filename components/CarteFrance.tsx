@@ -32,15 +32,16 @@ const ASPECT_RATIO = SCREEN_WIDTH / SCREEN_HEIGHT;
 const LATITUDE_DELTA = 10;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-// 🎨 PALETTE DE COULEURS STRICTE POUR LA COHÉRENCE
+// 🎨 PALETTE DE COULEURS STRICTE
 const CATEGORY_COLORS: Record<string, string> = {
-    Tech: "#2563EB",   // Bleu Roi (Tech)
-    Green: "#16A34A",  // Vert (Impact/Green)
-    Immo: "#EA580C",   // Orange (Immobilier)
-    Default: "#6366F1" // Indigo (Autre)
+    Tech: "#2563EB",   // Bleu Roi
+    Green: "#16A34A",  // Vert Impact
+    Immo: "#EA580C",   // Orange Immo
+    Finance: "#7C3AED", // Violet
+    Default: "#6366F1" // Indigo
 };
 
-// Style de carte très épuré pour faire "popper" les couleurs
+// Style de carte épuré
 const CUSTOM_MAP_STYLE = [
   { "elementType": "geometry", "stylers": [{ "color": "#f5f5f5" }] },
   { "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] },
@@ -56,33 +57,96 @@ const CUSTOM_MAP_STYLE = [
 const FILTERS = [
   { id: "all", label: "Tous", icon: "layers" },
   { id: "Tech", label: "Tech", icon: "cpu" },
-  { id: "Green", label: "Impact", icon: "wind" },
+  { id: "Green", label: "Green", icon: "wind" },
   { id: "Immo", label: "Immo", icon: "home" },
+  { id: "Finance", label: "Finance", icon: "pie-chart" },
 ];
 
 const PROJECTS = [
-  { id: "1", city: "Paris", lat: 48.8566, lon: 2.3522, name: "Station F Startups", roi: 12, type: "Tech", amount: "1.2M€", valuation: "12M€", image: "https://images.unsplash.com/photo-1550505393-2c3b24f2666d?w=400&fit=crop" },
-  { id: "2", city: "Lyon", lat: 45.7640, lon: 4.8357, name: "FoodLab Bio", roi: 10.5, type: "Green", amount: "850K€", valuation: "4.5M€", image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&fit=crop" },
-  { id: "3", city: "Bordeaux", lat: 44.8378, lon: -0.5792, name: "Wine Tech SaaS", roi: 9.8, type: "Tech", amount: "600K€", valuation: "3M€", image: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=400&fit=crop" },
-  { id: "4", city: "Marseille", lat: 43.2965, lon: 5.3698, name: "Sunny Energy Park", roi: 14.2, type: "Green", amount: "2.1M€", valuation: "18M€", image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=400&fit=crop" },
-  { id: "5", city: "Nantes", lat: 47.2184, lon: -1.5536, name: "Résidence Loire", roi: 8.0, type: "Immo", amount: "1.5M€", valuation: "2.2M€", image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&fit=crop" },
-  { id: "6", city: "Lille", lat: 50.6292, lon: 3.0573, name: "MedTech Nord", roi: 13.5, type: "Tech", amount: "3.2M€", valuation: "15M€", image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&fit=crop" },
-  { id: "7", city: "Toulouse", lat: 43.6047, lon: 1.4442, name: "AeroSpace Parts", roi: 11.0, type: "Tech", amount: "950K€", valuation: "6M€", image: "https://images.unsplash.com/photo-1517976487492-5750f3195933?w=400&fit=crop" },
+  { 
+      id: "1", 
+      name: "GreenTech Lyon", 
+      city: "Lyon", 
+      lat: 45.7640, 
+      lon: 4.8357, 
+      roi: 12.5, 
+      type: "Green", 
+      valuation: "12M€", 
+      image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=300&fit=crop",
+      route: "/projet"
+  },
+  { 
+      id: "2", 
+      name: "MedIA Diagnostics", 
+      city: "Paris", 
+      lat: 48.8566, 
+      lon: 2.3522, 
+      roi: 15.2, 
+      type: "Tech", 
+      valuation: "8.5M€", 
+      image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop",
+      route: "/projet2"
+  },
+  { 
+      id: "3", 
+      name: "ImmoVest Nantes", 
+      city: "Nantes", 
+      lat: 47.2184, 
+      lon: -1.5536, 
+      roi: 8.8, 
+      type: "Immo", 
+      valuation: "15M€", 
+      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop",
+      route: "/projet3"
+  },
+  { 
+      id: "4", 
+      name: "FinFlow Systems", 
+      city: "La Défense", 
+      lat: 48.8924, 
+      lon: 2.2361, 
+      roi: 11.4, 
+      type: "Finance", 
+      valuation: "22M€", 
+      image: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=300&fit=crop",
+      route: "/projet4"
+  },
+  { 
+      id: "5", 
+      name: "BioFood Chain", 
+      city: "Bordeaux", 
+      lat: 44.8378, 
+      lon: -0.5792, 
+      roi: 9.5, 
+      type: "Green", 
+      valuation: "6.2M€", 
+      image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=400&fit=crop",
+      route: "/projet"
+  },
+  { 
+      id: "6", 
+      name: "Virtual Estate", 
+      city: "Marseille", 
+      lat: 43.2965, 
+      lon: 5.3698, 
+      roi: 10.2, 
+      type: "Immo", 
+      valuation: "4.8M€", 
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop",
+      route: "/projet"
+  },
 ];
 
-// Helper pour récupérer la couleur exacte
 const getCategoryColor = (type: string) => {
     return CATEGORY_COLORS[type] || CATEGORY_COLORS.Default;
 };
 
-// ============ COMPOSANT MARKER (BADGE FLOTTANT) ============
-// Forme compacte, coins arrondis, bordure blanche pour contraste
+// ============ COMPOSANT MARKER ============
 const CustomMarker = ({ project, isSelected, onPress }: any) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const [tracksViewChanges, setTracksViewChanges] = useState(true);
 
   const color = getCategoryColor(project.type);
-  // Si sélectionné, on le rend noir pour marquer le coup, sinon couleur de catégorie
   const backgroundColor = isSelected ? colors.neutral900 : color;
 
   useEffect(() => {
@@ -98,7 +162,6 @@ const CustomMarker = ({ project, isSelected, onPress }: any) => {
     return () => clearTimeout(timer);
   }, [isSelected]);
 
-  // Initial load hack for Maps
   useEffect(() => {
     const timer = setTimeout(() => setTracksViewChanges(false), 500);
     return () => clearTimeout(timer);
@@ -110,7 +173,7 @@ const CustomMarker = ({ project, isSelected, onPress }: any) => {
       onPress={onPress}
       tracksViewChanges={tracksViewChanges}
       style={{ zIndex: isSelected ? 999 : 1 }}
-      anchor={{ x: 0.5, y: 0.5 }} // Centre le marker
+      anchor={{ x: 0.5, y: 0.5 }}
     >
       <Animated.View style={[styles.markerContainer, { transform: [{ scale: scaleAnim }] }]}>
         <View style={[styles.markerBadge, { backgroundColor }]}>
@@ -150,7 +213,6 @@ const CarteFrance = () => {
         useNativeDriver: true,
       }).start();
 
-      // Petit recentrage pour bien voir le projet
       const newRegion = {
         latitude: selectedProject.lat - 1.5, 
         longitude: selectedProject.lon,
@@ -243,7 +305,7 @@ const CarteFrance = () => {
                 <Feather name="search" size={18} color={colors.textTertiary} />
                 <TextInput
                     style={styles.searchInput}
-                    placeholder="Ville, projet..."
+                    placeholder="Rechercher sur la carte..."
                     value={searchQuery}
                     onChangeText={setSearchQuery}
                     placeholderTextColor={colors.textTertiary}
@@ -258,7 +320,7 @@ const CarteFrance = () => {
             </View>
           </View>
 
-          {/* Filtres avec Couleurs Dynamiques */}
+          {/* Filtres */}
           <View style={styles.filtersContainer}>
             <Animated.ScrollView 
                 horizontal 
@@ -267,7 +329,6 @@ const CarteFrance = () => {
             >
                 {FILTERS.map((filter) => {
                     const isActive = activeFilter === filter.id;
-                    // Détermine la couleur active (Noire pour 'Tous', Specifique pour autres)
                     let activeColor = colors.neutral900;
                     if (filter.id !== 'all') {
                         activeColor = getCategoryColor(filter.id);
@@ -337,7 +398,6 @@ const CarteFrance = () => {
                         <View style={styles.projectTitleContainer}>
                             <View style={styles.projectTopRow}>
                                 <Text style={styles.projectTitle} numberOfLines={1}>{selectedProject.name}</Text>
-                                {/* Badge de type coloré */}
                                 <View style={[styles.miniBadge, { backgroundColor: getCategoryColor(selectedProject.type) + '20' }]}>
                                     <Text style={[styles.miniBadgeText, { color: getCategoryColor(selectedProject.type) }]}>
                                         {selectedProject.type}
@@ -370,8 +430,10 @@ const CarteFrance = () => {
                     </View>
 
                     <TouchableOpacity 
-                        style={[styles.mainActionBtn, { backgroundColor: colors.primary }]} // Action principale toujours bleu
+                        style={[styles.mainActionBtn, { backgroundColor: colors.primary }]}
                         activeOpacity={0.9}
+                        // CORRECTION ICI: Utilisation de "as any" pour bypasser la vérification stricte de route dynamique
+                        onPress={() => router.push(selectedProject.route as any)}
                     >
                         <Text style={styles.mainActionText}>Voir l'analyse complète</Text>
                         <View style={styles.whiteIconCircle}>
@@ -520,30 +582,29 @@ const styles = StyleSheet.create({
       fontWeight: '600',
   },
   
-  // === NOUVEAU STYLE MARKER (Badge Flottant) ===
+  // === STYLE MARKER ===
   markerContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    // Permet d'éviter que les markers se chevauchent trop visuellement
   },
   markerBadge: {
     paddingHorizontal: 10,
     paddingVertical: 5,
-    borderRadius: 14, // Arrondi mais pas ovale complet, style "iOS"
-    borderWidth: 2,   // Bordure blanche épaisse pour détacher du fond de carte
+    borderRadius: 14, 
+    borderWidth: 2,   
     borderColor: colors.white,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
     elevation: 4,
-    minWidth: 46, // Largeur min pour uniformiser
+    minWidth: 46, 
     alignItems: 'center',
     justifyContent: 'center',
   },
   markerText: {
       color: colors.white,
-      fontWeight: '700', // Très gras pour lisibilité petite taille
+      fontWeight: '700', 
       fontSize: 13,
   },
 

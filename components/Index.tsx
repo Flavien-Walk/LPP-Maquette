@@ -1,6 +1,6 @@
 // components/Index.tsx
 import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from "expo-router"; // <--- IMPORT POUR LA NAVIGATION
+import { useRouter } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
@@ -24,8 +24,7 @@ import {
 import Feather from "react-native-vector-icons/Feather";
 import { colors, styles as globalStyles, spacing } from "../styles/indexStyles";
 
-// Déclaration des dimensions au début
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 // ============ TYPES ============
 type ActiveTab = "feed" | "invest" | "live" | "map" | "mail";
@@ -206,26 +205,33 @@ const cardVariantStyles: Record<CardVariant, ViewStyle> = {
 // ============ IMAGE URLS (Unsplash) ============
 const IMAGES = {
   avatars: [
-    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", // 0: Sophie (GreenTech)
+    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", // 1: Marc (MedIA)
+    "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=face", // 2: Lea (ImmoVest)
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", // 3: Thomas (FinFlow)
+    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", // 4: Claire (BioFood)
+    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", // 5: Marie Dupont (Nouveau visage)
   ],
   startups: [
-    "https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=300&fit=crop",
-    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop",
+    "https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=300&fit=crop", // 0: GreenTech Lyon
+    "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop", // 1: MedIA
+    "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop", // 2: ImmoVest
+    "https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=300&fit=crop", // 3: FinFlow
+    "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=400&fit=crop", // 4: BioFood
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop", // 5: VirtualEst
   ],
+  // CORRECTION: Ajout de la propriété 'projects' pour résoudre l'erreur TS
   projects: [
-    "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop",
-    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=400&fit=crop",
-    "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=600&h=400&fit=crop",
-    "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&h=400&fit=crop",
+    "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=400&fit=crop", // GreenTech
+    "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&h=400&fit=crop", // Food/Bio
+    "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop", // Immo
+  ],
+  posts: [
+    "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=500&fit=crop", // Panneaux solaires
+    "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=500&fit=crop", // Labo médical
   ],
   lives: [
-    "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500&h=300&fit=crop",
+    "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500&h=300&fit=crop", 
     "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=500&h=300&fit=crop",
     "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=500&h=300&fit=crop",
   ],
@@ -235,19 +241,45 @@ const IMAGES = {
     "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&h=250&fit=crop",
   ],
   map: "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&h=400&fit=crop",
-  posts: [
-    "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&h=400&fit=crop",
-    "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=400&fit=crop",
-  ],
 };
 
 // ============ MOCK DATA ============
 const MOCK_STORIES: Story[] = [
-  { id: "1", name: "GreenTech", avatarUrl: IMAGES.avatars[0], hasNew: true, viewed: false },
-  { id: "2", name: "FinUp", avatarUrl: IMAGES.avatars[1], hasNew: true, viewed: false },
-  { id: "3", name: "MedIA", avatarUrl: IMAGES.avatars[2], hasNew: true, viewed: true },
-  { id: "4", name: "AgriSmart", avatarUrl: IMAGES.avatars[3], hasNew: false, viewed: true },
-  { id: "5", name: "EduTech", avatarUrl: IMAGES.avatars[4], hasNew: false, viewed: true },
+  { 
+    id: "1", 
+    name: "GreenTech Lyon", 
+    avatarUrl: IMAGES.startups[0], 
+    hasNew: true, 
+    viewed: false 
+  },
+  { 
+    id: "2", 
+    name: "MedIA", 
+    avatarUrl: IMAGES.startups[1], 
+    hasNew: true, 
+    viewed: false 
+  },
+  { 
+    id: "3", 
+    name: "ImmoVest", 
+    avatarUrl: IMAGES.startups[2], 
+    hasNew: true, 
+    viewed: true 
+  },
+  { 
+    id: "4", 
+    name: "FinFlow", 
+    avatarUrl: IMAGES.startups[3], 
+    hasNew: false, 
+    viewed: true 
+  },
+  { 
+    id: "5", 
+    name: "BioFood", 
+    avatarUrl: IMAGES.startups[4], 
+    hasNew: false, 
+    viewed: true 
+  },
 ];
 
 const MOCK_POSTS: Post[] = [
@@ -255,7 +287,7 @@ const MOCK_POSTS: Post[] = [
     id: "1",
     type: "startup",
     author: "GreenTech Lyon",
-    avatarUrl: IMAGES.avatars[0],
+    avatarUrl: IMAGES.startups[0], // UTILISE LE LOGO STARTUP
     content: "Nous venons d'atteindre 150% de notre objectif de levée. Un immense merci à tous nos investisseurs qui nous font confiance depuis le premier jour.",
     imageUrl: IMAGES.posts[0],
     likes: 234,
@@ -269,7 +301,7 @@ const MOCK_POSTS: Post[] = [
     id: "2",
     type: "investor",
     author: "Marie Dupont",
-    avatarUrl: IMAGES.avatars[1],
+    avatarUrl: IMAGES.avatars[5], // UTILISE LE NOUVEAU VISAGE UNIQUE
     content: "Premier investissement sur LPP dans une startup food-tech marseillaise. Le pitch était convaincant et l'équipe solide. Hâte de suivre leur évolution !",
     likes: 89,
     comments: 12,
@@ -281,8 +313,8 @@ const MOCK_POSTS: Post[] = [
   {
     id: "3",
     type: "startup",
-    author: "MedIA Paris",
-    avatarUrl: IMAGES.avatars[2],
+    author: "MedIA Diagnostics",
+    avatarUrl: IMAGES.startups[1], // UTILISE LE LOGO MedIA
     content: "LIVE demain à 18h : présentation exclusive de notre solution IA pour le diagnostic médical. Inscrivez-vous pour ne pas manquer cette session Q&A avec notre équipe R&D.",
     imageUrl: IMAGES.posts[1],
     likes: 156,
@@ -296,8 +328,8 @@ const MOCK_POSTS: Post[] = [
 
 const MOCK_PORTFOLIO: PortfolioItem[] = [
   { id: "1", projectName: "GreenTech Lyon", imageUrl: IMAGES.startups[0], shares: 50, variation: 12.5, value: 2250, sector: "CleanTech" },
-  { id: "2", projectName: "FoodLab Marseille", imageUrl: IMAGES.startups[1], shares: 30, variation: -3.2, value: 870, sector: "FoodTech" },
-  { id: "3", projectName: "EduTech Bordeaux", imageUrl: IMAGES.startups[2], shares: 100, variation: 8.7, value: 3480, sector: "EdTech" },
+  { id: "2", projectName: "FoodLab Marseille", imageUrl: IMAGES.startups[4], shares: 30, variation: -3.2, value: 870, sector: "FoodTech" },
+  { id: "3", projectName: "ImmoVest Nantes", imageUrl: IMAGES.startups[2], shares: 100, variation: 8.7, value: 3480, sector: "PropTech" },
 ];
 
 const MOCK_LIVES: LiveEvent[] = [
@@ -316,8 +348,8 @@ const MOCK_LIVES: LiveEvent[] = [
   {
     id: "2",
     title: "Q&A Investisseurs - Bilan S1 2024",
-    startup: "FinUp Nantes",
-    startupAvatar: IMAGES.avatars[1],
+    startup: "FinFlow Systems",
+    startupAvatar: IMAGES.startups[3],
     datetime: "Demain, 14h30",
     interested: 189,
     sector: "FinTech",
@@ -327,8 +359,8 @@ const MOCK_LIVES: LiveEvent[] = [
   {
     id: "3",
     title: "Demo Produit : IA Diagnostic",
-    startup: "MedIA Paris",
-    startupAvatar: IMAGES.avatars[2],
+    startup: "MedIA Diagnostics",
+    startupAvatar: IMAGES.startups[1],
     datetime: "Ven. 20h00",
     interested: 276,
     sector: "HealthTech",
@@ -346,8 +378,8 @@ const MOCK_REPLAYS: Replay[] = [
 const MOCK_MAILS: MailItem[] = [
   { id: "1", type: "rapport", project: "GreenTech Lyon", subject: "Rapport trimestriel T2 2024", date: "Il y a 2j", read: false },
   { id: "2", type: "notification", project: "FoodLab Marseille", subject: "Objectif de levée atteint !", date: "Il y a 3j", read: false },
-  { id: "3", type: "message", project: "EduTech Bordeaux", subject: "Invitation événement investisseurs", date: "Il y a 5j", read: true },
-  { id: "4", type: "rapport", project: "MedIA Paris", subject: "Rapport trimestriel T2 2024", date: "Il y a 1 sem", read: true },
+  { id: "3", type: "message", project: "ImmoVest Nantes", subject: "Invitation événement investisseurs", date: "Il y a 5j", read: true },
+  { id: "4", type: "rapport", project: "MedIA Diagnostics", subject: "Rapport trimestriel T2 2024", date: "Il y a 1 sem", read: true },
 ];
 
 const MOCK_PROJECTS: Project[] = [
@@ -394,8 +426,8 @@ const MOCK_PROJECTS: Project[] = [
 
 const MOCK_TRENDING: TrendingItem[] = [
   { id: "1", name: "GreenTech Lyon", sector: "CleanTech", change: 24.5, imageUrl: IMAGES.startups[0] },
-  { id: "2", name: "MedIA Paris", sector: "HealthTech", change: 18.2, imageUrl: IMAGES.startups[1] },
-  { id: "3", name: "FinUp Nantes", sector: "FinTech", change: 12.8, imageUrl: IMAGES.startups[2] },
+  { id: "2", name: "MedIA Diagnostics", sector: "HealthTech", change: 18.2, imageUrl: IMAGES.startups[1] },
+  { id: "3", name: "FinFlow Systems", sector: "FinTech", change: 12.8, imageUrl: IMAGES.startups[3] },
 ];
 
 // ============ SUB-COMPONENTS ============
@@ -466,7 +498,7 @@ const Avatar: React.FC<{
   imageUrl?: string; 
   initials?: string; 
   size?: IconSize; 
-  showOnline?: boolean;
+  showOnline?: boolean; 
   style?: ViewStyle;
 }> = ({ imageUrl, initials, size = "md", showOnline, style }) => (
   <View style={[globalStyles.avatar, avatarSizeStyles[size], style]}>
@@ -1581,7 +1613,13 @@ const Index: React.FC = () => {
 
   const renderTrending = () => (
     <View style={globalStyles.trendingSection}>
-      <SectionHeader title="Tendances" subtitle="Les startups qui performent" action="Voir tout" compact />
+      <SectionHeader 
+        title="Tendances" 
+        subtitle="Les startups qui performent" 
+        action="Voir tout" 
+        onAction={() => router.push("/tendances")}
+        compact 
+      />
       {MOCK_TRENDING.map((item, index) => (
         <TrendingCard key={item.id} item={item} rank={index + 1} />
       ))}
