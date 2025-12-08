@@ -73,7 +73,7 @@ const MOCK_TRENDING: TrendingItem[] = [
     description: "Solutions d'énergie renouvelable pour parcs industriels.",
     investors: 342,
     raised: "2.4M€",
-    route: "/projet", 
+    route: "/projet1", 
   },
   {
     id: "2",
@@ -121,7 +121,7 @@ const MOCK_TRENDING: TrendingItem[] = [
     description: "Traçabilité alimentaire complète par blockchain.",
     investors: 267,
     raised: "1.6M€",
-    route: "/projet", 
+    route: "/projet5", 
   },
   {
     id: "6",
@@ -133,7 +133,7 @@ const MOCK_TRENDING: TrendingItem[] = [
     description: "Visites immobilières en réalité augmentée.",
     investors: 321,
     raised: "2.1M€",
-    route: "/projet", 
+    route: "/projet6", 
   },
 ];
 

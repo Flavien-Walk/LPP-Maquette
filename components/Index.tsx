@@ -766,6 +766,7 @@ const PostCard: React.FC<{ post: Post; index: number }> = ({ post, index }) => {
   const [liked, setLiked] = useState(post.liked);
   const [likesCount, setLikesCount] = useState(post.likes);
   const heartScale = useRef(new Animated.Value(1)).current;
+  const router = useRouter();
 
   const handleLike = () => {
     Animated.sequence([
@@ -777,22 +778,50 @@ const PostCard: React.FC<{ post: Post; index: number }> = ({ post, index }) => {
     setLikesCount(liked ? likesCount - 1 : likesCount + 1);
   };
 
+  const handleImagePress = () => {
+    // Redirection selon l'auteur du post
+    if (post.author === "GreenTech Lyon") {
+      router.push("/projet1");
+    } else if (post.author === "Marie Dupont") {
+      router.push("/profil");
+    } else if (post.author === "MedIA Diagnostics") {
+      router.push("/projet2");
+    }
+  };
+
+  const handleAuthorPress = () => {
+    // Redirection vers le profil de l'auteur
+    if (post.author === "Marie Dupont") {
+      router.push("/profil");
+    } else if (post.author === "GreenTech Lyon") {
+      router.push("/projet1");
+    } else if (post.author === "MedIA Diagnostics") {
+      router.push("/projet2");
+    }
+  };
+
   return (
     <AnimatedCard delay={index * 100}>
       <View style={globalStyles.postCard}>
         <View style={globalStyles.postHeader}>
-          <Avatar imageUrl={post.avatarUrl} size="md" />
-          <View style={globalStyles.postAuthorContainer}>
-            <View style={globalStyles.postAuthorRow}>
-              <Text style={globalStyles.postAuthor}>{post.author}</Text>
-              {post.verified && (
-                <View style={globalStyles.postVerified}>
-                  <Icon name="check" size="sm" color={colors.white} />
-                </View>
-              )}
+          <TouchableOpacity 
+            onPress={handleAuthorPress} 
+            activeOpacity={0.7}
+            style={{ flexDirection: 'row', flex: 1, alignItems: 'center' }}
+          >
+            <Avatar imageUrl={post.avatarUrl} size="md" />
+            <View style={globalStyles.postAuthorContainer}>
+              <View style={globalStyles.postAuthorRow}>
+                <Text style={globalStyles.postAuthor}>{post.author}</Text>
+                {post.verified && (
+                  <View style={globalStyles.postVerified}>
+                    <Icon name="check" size="sm" color={colors.white} />
+                  </View>
+                )}
+              </View>
+              <Text style={globalStyles.postTimestamp}>{post.timestamp}</Text>
             </View>
-            <Text style={globalStyles.postTimestamp}>{post.timestamp}</Text>
-          </View>
+          </TouchableOpacity>
           <TouchableOpacity style={globalStyles.postMoreButton}>
             <Icon name="more" size="md" color={colors.textTertiary} />
           </TouchableOpacity>
@@ -801,7 +830,9 @@ const PostCard: React.FC<{ post: Post; index: number }> = ({ post, index }) => {
         <Text style={globalStyles.postContent}>{post.content}</Text>
         
         {post.imageUrl && (
-          <Image source={{ uri: post.imageUrl }} style={globalStyles.postImage} resizeMode="cover" />
+          <TouchableOpacity onPress={handleImagePress} activeOpacity={0.9}>
+            <Image source={{ uri: post.imageUrl }} style={globalStyles.postImage} resizeMode="cover" />
+          </TouchableOpacity>
         )}
 
         <View style={globalStyles.postStats}>
@@ -1198,22 +1229,39 @@ const StatCard: React.FC<{
   );
 };
 
-const TrendingCard: React.FC<{ item: TrendingItem; rank: number }> = ({ item, rank }) => (
-  <View style={globalStyles.trendingCard}>
-    <View style={[globalStyles.trendingRank, rank <= 3 && globalStyles.trendingRankTop]}>
-      <Text style={[globalStyles.trendingRankText, rank <= 3 && globalStyles.trendingRankTextTop]}>{rank}</Text>
-    </View>
-    <Image source={{ uri: item.imageUrl }} style={globalStyles.trendingImage} />
-    <View style={globalStyles.trendingInfo}>
-      <Text style={globalStyles.trendingName}>{item.name}</Text>
-      <Text style={globalStyles.trendingMeta}>{item.sector}</Text>
-    </View>
-    <View style={globalStyles.trendingChange}>
-      <Text style={[globalStyles.trendingChangeValue, globalStyles.textPositive]}>+{item.change}%</Text>
-      <Text style={globalStyles.trendingChangeLabel}>7 jours</Text>
-    </View>
-  </View>
-);
+const TrendingCard: React.FC<{ item: TrendingItem; rank: number }> = ({ item, rank }) => {
+  const router = useRouter();
+
+  const handlePress = () => {
+    // Redirection selon le rang
+    if (rank === 1) {
+      router.push("/projet1");
+    } else if (rank === 2) {
+      router.push("/projet2");
+    } else if (rank === 3) {
+      router.push("/projet3");
+    }
+  };
+
+  return (
+    <TouchableOpacity onPress={handlePress} activeOpacity={0.7}>
+      <View style={globalStyles.trendingCard}>
+        <View style={[globalStyles.trendingRank, rank <= 3 && globalStyles.trendingRankTop]}>
+          <Text style={[globalStyles.trendingRankText, rank <= 3 && globalStyles.trendingRankTextTop]}>{rank}</Text>
+        </View>
+        <Image source={{ uri: item.imageUrl }} style={globalStyles.trendingImage} />
+        <View style={globalStyles.trendingInfo}>
+          <Text style={globalStyles.trendingName}>{item.name}</Text>
+          <Text style={globalStyles.trendingMeta}>{item.sector}</Text>
+        </View>
+        <View style={globalStyles.trendingChange}>
+          <Text style={[globalStyles.trendingChangeValue, globalStyles.textPositive]}>+{item.change}%</Text>
+          <Text style={globalStyles.trendingChangeLabel}>7 jours</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 // ============ SMART FAB COMPONENT (CORRIGÉ & COMPLET) ============
 const SmartActionFAB: React.FC = () => {
