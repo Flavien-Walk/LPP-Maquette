@@ -345,7 +345,7 @@ export default function Marketplace() {
 
   const renderIncubators = () => (
     <View style={styles.incubatorSection}>
-      <Text style={styles.sectionTitle}>Incubateurs près de chez vous</Text>
+      <Text style={styles.sectionTitle}>Cathégories :</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.incubatorList}>
         {MOCK_INCUBATORS.map((incubator) => (
           <TouchableOpacity key={incubator.id} style={styles.incubatorCard} activeOpacity={0.8}>

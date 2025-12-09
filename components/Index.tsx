@@ -6,7 +6,7 @@ import {
   Animated,
   Dimensions,
   Image,
-  ImageBackground,
+  ImageBackground, // ✅ AJOUT DE L'IMPORT MANQUANT
   Platform,
   RefreshControl,
   SafeAreaView,
@@ -239,7 +239,7 @@ const IMAGES = {
     "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=400&h=250&fit=crop",
     "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&h=250&fit=crop",
   ],
-  map: "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&h=400&fit=crop",
+  map: "https://images.unsplash.com/photo-1555685812-4b943f3db9f0?w=800&h=400&fit=crop",
 };
 
 // ============ MOCK DATA ============
@@ -442,6 +442,7 @@ const Icon: React.FC<{ name: string; size?: IconSize; color?: string }> = ({ nam
     arrow: "arrow-right",
     "arrow-left": "arrow-left",
     "arrow-up": "arrow-up",
+    "arrow-right": "arrow-right",
     calendar: "calendar",
     users: "users",
     clock: "clock",
@@ -896,6 +897,7 @@ const PortfolioRow: React.FC<{ item: PortfolioItem; isLast: boolean }> = ({ item
 );
 
 const LiveCard: React.FC<{ live: LiveEvent }> = ({ live }) => {
+  const router = useRouter();
   const pulseAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
@@ -909,8 +911,29 @@ const LiveCard: React.FC<{ live: LiveEvent }> = ({ live }) => {
     }
   }, [live.isLive]);
 
+  // ✅ FONCTION DE NAVIGATION SELON L'ID DU LIVE
+  const handlePress = () => {
+    switch (live.id) {
+      case "1":
+        router.push("/live"); // Pitch Live : Révolution AgriTech
+        break;
+      case "2":
+        router.push("/live2"); // Q&A Investisseurs
+        break;
+      case "3":
+        router.push("/live"); // Demo Produit : IA Diagnostic
+        break;
+      default:
+        router.push("/live");
+    }
+  };
+
   return (
-    <View style={globalStyles.liveCard}>
+    <TouchableOpacity 
+      onPress={handlePress} 
+      activeOpacity={0.9}
+      style={globalStyles.liveCard}
+    >
       <ImageBackground source={{ uri: live.imageUrl }} style={globalStyles.liveCardImage}>
         <View style={globalStyles.liveCardImageOverlay}>
           <View style={globalStyles.liveCardHeader}>
@@ -952,39 +975,61 @@ const LiveCard: React.FC<{ live: LiveEvent }> = ({ live }) => {
           variant={live.isLive ? "primary" : "outline"} 
           size="sm"
           fullWidth 
+          onPress={handlePress}
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
-const ReplayCard: React.FC<{ replay: Replay }> = ({ replay }) => (
-  <View style={globalStyles.replayCard}>
-    <View style={globalStyles.replayThumbnail}>
-      <Image source={{ uri: replay.thumbnailUrl }} style={globalStyles.replayThumbnailImage} resizeMode="cover" />
-      <View style={globalStyles.replayPlayButton}>
-        <Icon name="play" size="lg" color={colors.primary} />
-      </View>
-      <View style={globalStyles.replayDuration}>
-        <Text style={globalStyles.replayDurationText}>{replay.duration}</Text>
-      </View>
-    </View>
-    <View style={globalStyles.replayInfo}>
-      <Text style={globalStyles.replayTitle} numberOfLines={2}>{replay.title}</Text>
-      <Text style={globalStyles.replayStartup}>{replay.startup}</Text>
-      <View style={globalStyles.replayMeta}>
-        <View style={globalStyles.replayMetaItem}>
-          <Icon name="eye" size="sm" color={colors.textTertiary} />
-          <Text style={globalStyles.replayMetaText}>{replay.views.toLocaleString()}</Text>
+const ReplayCard: React.FC<{ replay: Replay }> = ({ replay }) => {
+  const router = useRouter();
+
+  // ✅ FONCTION DE NAVIGATION SELON L'ID DU REPLAY
+  const handlePress = () => {
+    switch (replay.id) {
+      case "1":
+        router.push("/"); // Comment lever 500K€ en 48h
+        break;
+      case "2":
+        router.push("/"); // Masterclass Valorisation
+        break;
+      case "3":
+        router.push("/"); // Retour d'XP : Notre pivot
+        break;
+      default:
+        router.push("/");
+    }
+  };
+
+  return (
+    <TouchableOpacity onPress={handlePress} activeOpacity={0.9} style={globalStyles.replayCard}>
+      <View style={globalStyles.replayThumbnail}>
+        <Image source={{ uri: replay.thumbnailUrl }} style={globalStyles.replayThumbnailImage} resizeMode="cover" />
+        <View style={globalStyles.replayPlayButton}>
+          <Icon name="play" size="lg" color={colors.primary} />
         </View>
-        <View style={globalStyles.replayMetaItem}>
-          <Icon name="location" size="sm" color={colors.textTertiary} />
-          <Text style={globalStyles.replayMetaText}>{replay.location}</Text>
+        <View style={globalStyles.replayDuration}>
+          <Text style={globalStyles.replayDurationText}>{replay.duration}</Text>
         </View>
       </View>
-    </View>
-  </View>
-);
+      <View style={globalStyles.replayInfo}>
+        <Text style={globalStyles.replayTitle} numberOfLines={2}>{replay.title}</Text>
+        <Text style={globalStyles.replayStartup}>{replay.startup}</Text>
+        <View style={globalStyles.replayMeta}>
+          <View style={globalStyles.replayMetaItem}>
+            <Icon name="eye" size="sm" color={colors.textTertiary} />
+            <Text style={globalStyles.replayMetaText}>{replay.views.toLocaleString()}</Text>
+          </View>
+          <View style={globalStyles.replayMetaItem}>
+            <Icon name="location" size="sm" color={colors.textTertiary} />
+            <Text style={globalStyles.replayMetaText}>{replay.location}</Text>
+          </View>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 const MailRow: React.FC<{ mail: MailItem }> = ({ mail }) => {
   const getMailIcon = (): string => {
@@ -1562,7 +1607,7 @@ const Index: React.FC = () => {
             <TouchableOpacity 
               style={globalStyles.heroCTA} 
               activeOpacity={0.8}
-              onPress={() => router.push("/marketplace")} // <--- MODIFICATION ICI
+              onPress={() => router.push("/marketplace")}
             >
               <Text style={globalStyles.heroCTAText}>Explorer les pépites</Text>
               <Icon name="arrow-right" size="sm" color={colors.primary} />
@@ -1819,7 +1864,7 @@ const Index: React.FC = () => {
       {renderGeoSelector()}
       <MapPreview 
         geoFilter={geoFilter} 
-        onExplore={() => router.push("/cartefrance")} // <--- ACTION DE NAVIGATION AJOUTÉE
+        onExplore={() => router.push("/cartefrance")}
       />
       
       <SectionHeader title="À découvrir" compact />
