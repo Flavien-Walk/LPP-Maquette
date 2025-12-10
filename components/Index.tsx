@@ -239,7 +239,7 @@ const IMAGES = {
     "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=400&h=250&fit=crop",
     "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&h=250&fit=crop",
   ],
-  map: "https://images.unsplash.com/photo-1555685812-4b943f3db9f0?w=800&h=400&fit=crop",
+  map: "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&h=500&fit=crop",
 };
 
 // ============ MOCK DATA ============
@@ -260,7 +260,7 @@ const MOCK_STORIES: Story[] = [
   },
   { 
     id: "3", 
-    name: "ImmoVest", 
+    name: "Virtual Estate", 
     avatarUrl: IMAGES.startups[2], 
     hasNew: true, 
     viewed: true 
@@ -334,12 +334,12 @@ const MOCK_PORTFOLIO: PortfolioItem[] = [
 const MOCK_LIVES: LiveEvent[] = [
   {
     id: "1",
-    title: "Pitch Live : Révolution AgriTech",
-    startup: "AgriSmart Toulouse",
+    title: "Pitch Live : Virtual Estate",
+    startup: "Marseille, PACA",
     startupAvatar: IMAGES.avatars[3],
     datetime: "En direct",
     interested: 342,
-    sector: "AgriTech",
+    sector: "PropTech/ Web3",
     isLive: true,
     viewers: 1247,
     imageUrl: IMAGES.lives[0],
@@ -370,7 +370,7 @@ const MOCK_LIVES: LiveEvent[] = [
 
 const MOCK_REPLAYS: Replay[] = [
   { id: "1", title: "Comment lever 500K€ en 48h", startup: "SpeedFund Lyon", duration: "45:22", views: 2340, location: "Lyon", thumbnailUrl: IMAGES.replays[0] },
-  { id: "2", title: "Masterclass Valorisation", startup: "LPP Academy", duration: "1:20:15", views: 5621, location: "Paris", thumbnailUrl: IMAGES.replays[1] },
+  { id: "2", title: "Masterclass Valorisation", startup: "Incubateur HEC", duration: "1:20:15", views: 5621, location: "Paris", thumbnailUrl: IMAGES.replays[1] },
   { id: "3", title: "Retour d'XP : Notre pivot", startup: "PivotLab Lille", duration: "32:48", views: 1890, location: "Lille", thumbnailUrl: IMAGES.replays[2] },
 ];
 
@@ -733,13 +733,24 @@ const AnimatedCard: React.FC<{
 };
 
 const StoryItem: React.FC<{ story: Story; index: number }> = ({ story, index }) => {
+  const router = useRouter(); // Assurez-vous d'avoir ce hook disponible ou passez-le en props si StoryItem est hors du composant principal
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const handlePress = () => {
+    // Animation tactile
     Animated.sequence([
       Animated.timing(scaleAnim, { toValue: 0.9, duration: 100, useNativeDriver: true }),
       Animated.timing(scaleAnim, { toValue: 1, duration: 100, useNativeDriver: true }),
     ]).start();
+
+    // ✅ LOGIQUE DE REDIRECTION AJOUTÉE
+    if (story.name === "GreenTech Lyon") {
+      // Si vous utilisez Expo Router avec le dossier "app"
+      router.push("/story1");
+    } else {
+      console.log("Ouvrir la story de :", story.name);
+      // Ici vous pourriez rediriger vers une page story générique : router.push(`/story/${story.id}`)
+    }
   };
 
   return (
@@ -762,6 +773,8 @@ const StoryItem: React.FC<{ story: Story; index: number }> = ({ story, index }) 
   );
 };
 
+  
+
 const PostCard: React.FC<{ post: Post; index: number }> = ({ post, index }) => {
   const [liked, setLiked] = useState(post.liked);
   const [likesCount, setLikesCount] = useState(post.likes);
@@ -779,14 +792,6 @@ const PostCard: React.FC<{ post: Post; index: number }> = ({ post, index }) => {
   };
 
   const handleImagePress = () => {
-    // Redirection selon l'auteur du post
-    if (post.author === "GreenTech Lyon") {
-      router.push("/projet1");
-    } else if (post.author === "Marie Dupont") {
-      router.push("/profil");
-    } else if (post.author === "MedIA Diagnostics") {
-      router.push("/projet2");
-    }
   };
 
   const handleAuthorPress = () => {
@@ -921,7 +926,7 @@ const LiveCard: React.FC<{ live: LiveEvent }> = ({ live }) => {
         router.push("/live2"); // Q&A Investisseurs
         break;
       case "3":
-        router.push("/live"); // Demo Produit : IA Diagnostic
+        router.push("/live3"); // Demo Produit : IA Diagnostic
         break;
       default:
         router.push("/live");
@@ -989,13 +994,13 @@ const ReplayCard: React.FC<{ replay: Replay }> = ({ replay }) => {
   const handlePress = () => {
     switch (replay.id) {
       case "1":
-        router.push("/"); // Comment lever 500K€ en 48h
+        router.push("/replay1"); // Comment lever 500K€ en 48h
         break;
       case "2":
-        router.push("/"); // Masterclass Valorisation
+        router.push("/replay2"); // Masterclass Valorisation
         break;
       case "3":
-        router.push("/"); // Retour d'XP : Notre pivot
+        router.push("/replay3"); // Retour d'XP : Notre pivot
         break;
       default:
         router.push("/");
@@ -1283,7 +1288,7 @@ const TrendingCard: React.FC<{ item: TrendingItem; rank: number }> = ({ item, ra
     } else if (rank === 2) {
       router.push("/projet2");
     } else if (rank === 3) {
-      router.push("/projet3");
+      router.push("/projet4");
     }
   };
 

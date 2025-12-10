@@ -172,7 +172,7 @@ const Live = () => {
   const params = useLocalSearchParams();
   
   // États
-  const [viewers, setViewers] = useState(247);
+  const [viewers, setViewers] = useState(1247);
   const [likes, setLikes] = useState(1834);
   const [showComments, setShowComments] = useState(true);
   const [showInfo, setShowInfo] = useState(false);
@@ -270,11 +270,11 @@ const Live = () => {
         activeOpacity={0.9}
       >
         <Image
-          source={{ uri: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=150&h=150&fit=crop" }}
+          source={{ uri: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop" }}
           style={styles.startupAvatar}
         />
         <View style={styles.startupDetails}>
-          <Text style={styles.startupName}>AgriTech Revolution</Text>
+          <Text style={styles.startupName}>Virtual Estate</Text>
           <Text style={styles.pitchTitle}>Pitch Live - Levée de fonds</Text>
         </View>
         <Feather name={showInfo ? "chevron-up" : "chevron-down"} size={20} color={colors.white} />
@@ -285,11 +285,11 @@ const Live = () => {
         <View style={styles.infoPanel}>
           <Text style={styles.infoPanelTitle}>À propos du projet</Text>
           <Text style={styles.infoPanelText}>
-            AgriTech Revolution développe une plateforme IoT pour optimiser les rendements agricoles grâce à l'IA et l'analyse prédictive.
+            Visites immobilières en réalité augmentée.
           </Text>
           <View style={styles.infoStats}>
             <View style={styles.infoStat}>
-              <Text style={styles.infoStatValue}>500K€</Text>
+              <Text style={styles.infoStatValue}>3.2M€</Text>
               <Text style={styles.infoStatLabel}>Objectif</Text>
             </View>
             <View style={styles.infoStat}>
@@ -297,11 +297,14 @@ const Live = () => {
               <Text style={styles.infoStatLabel}>Financé</Text>
             </View>
             <View style={styles.infoStat}>
-              <Text style={styles.infoStatValue}>14j</Text>
+              <Text style={styles.infoStatValue}>8j</Text>
               <Text style={styles.infoStatLabel}>Restants</Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.investButton}>
+          <TouchableOpacity 
+            style={styles.investButton}
+            onPress={() => router.push("/projet6")} 
+          >
             <LinearGradient
               colors={[colors.primary, "#00C6FF"]}
               start={{ x: 0, y: 0 }}
@@ -314,7 +317,6 @@ const Live = () => {
           </TouchableOpacity>
         </View>
       )}
-
       {/* Reactions flottantes */}
       <View style={styles.floatingReactionsContainer}>
         {floatingReactions.map((reaction) => (

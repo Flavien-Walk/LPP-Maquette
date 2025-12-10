@@ -266,7 +266,7 @@ const Projet6: React.FC = () => {
             {/* 1. HEADER AVEC IMAGE DE FOND (z-index bas) */}
             <View style={styles.headerAbsolute}>
                 <Animated.Image
-                    source={{ uri: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80" }}
+                    source={{ uri: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop" }}
                     style={[styles.headerImage, { transform: [{ translateY: headerTranslateY }] }]}
                 />
                 <LinearGradient colors={['rgba(79, 70, 229, 0.4)', 'rgba(30, 27, 75, 0.8)', BG_COLOR]} style={styles.gradientOverlay} locations={[0, 0.6, 1]} />

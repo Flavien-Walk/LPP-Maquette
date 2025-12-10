@@ -2,21 +2,21 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
-    Animated,
-    Dimensions,
-    Image,
-    LayoutAnimation,
-    Platform,
-    Pressable,
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    UIManager,
-    View,
+  Animated,
+  Dimensions,
+  Image,
+  LayoutAnimation,
+  Platform,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  UIManager,
+  View,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import { colors, radius, shadows, typography } from "../styles/indexStyles";
@@ -87,20 +87,9 @@ const MOCK_TRENDING: TrendingItem[] = [
     raised: "1.8M€",
     route: "/projet2", 
   },
+
   {
     id: "3",
-    name: "ImmoVest Nantes",
-    type: "Immo",
-    subSector: "PropTech",
-    change: 12.8,
-    imageUrl: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop",
-    description: "Plateforme de gestion locative automatisée.",
-    investors: 456,
-    raised: "3.2M€",
-    route: "/projet3", 
-  },
-  {
-    id: "4",
     name: "FinFlow Systems",
     type: "Finance",
     subSector: "FinTech",
@@ -111,6 +100,20 @@ const MOCK_TRENDING: TrendingItem[] = [
     raised: "1.1M€",
     route: "/projet4", 
   },
+
+  {
+    id: "4",
+    name: "Virtual Estate",
+    type: "Immo",
+    subSector: "PropTech",
+    change: 12.8,
+    imageUrl: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop",
+    description: "Plateforme de gestion locative automatisée.",
+    investors: 456,
+    raised: "3.2M€",
+    route: "/projet6", 
+  },
+  
   {
     id: "5",
     name: "BioFood Chain",
