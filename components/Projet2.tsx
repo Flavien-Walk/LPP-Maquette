@@ -34,7 +34,7 @@ const BG_COLOR = "#F0F9FF"; // Fond bleu très pâle
 const PROJECT_DATA = {
     // 1. En-tête & 2. Résumé
     id: "media-diag-01",
-    name: "MedIA Diag",
+    name: "MedIA Diagnostics",
     tagline: "L'IA qui détecte les tumeurs 6 mois plus tôt.",
     sector: "HealthTech / AI",
     location: "Montpellier, MedVallée",

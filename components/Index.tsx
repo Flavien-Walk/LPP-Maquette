@@ -733,7 +733,7 @@ const AnimatedCard: React.FC<{
 };
 
 const StoryItem: React.FC<{ story: Story; index: number }> = ({ story, index }) => {
-  const router = useRouter(); // Assurez-vous d'avoir ce hook disponible ou passez-le en props si StoryItem est hors du composant principal
+  const router = useRouter(); 
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const handlePress = () => {
@@ -743,13 +743,15 @@ const StoryItem: React.FC<{ story: Story; index: number }> = ({ story, index }) 
       Animated.timing(scaleAnim, { toValue: 1, duration: 100, useNativeDriver: true }),
     ]).start();
 
-    // ✅ LOGIQUE DE REDIRECTION AJOUTÉE
+    // ✅ LOGIQUE DE REDIRECTION MISE À JOUR
     if (story.name === "GreenTech Lyon") {
-      // Si vous utilisez Expo Router avec le dossier "app"
       router.push("/story1");
+    } else if (story.name === "MedIA") {
+      // 👉 Redirection vers la Story 2 (MedIA)
+      router.push("/story2");
     } else {
       console.log("Ouvrir la story de :", story.name);
-      // Ici vous pourriez rediriger vers une page story générique : router.push(`/story/${story.id}`)
+      // Pour les autres, pas de redirection pour l'instant
     }
   };
 
@@ -772,7 +774,6 @@ const StoryItem: React.FC<{ story: Story; index: number }> = ({ story, index }) 
     </TouchableOpacity>
   );
 };
-
   
 
 const PostCard: React.FC<{ post: Post; index: number }> = ({ post, index }) => {
