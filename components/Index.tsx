@@ -6,7 +6,7 @@ import {
   Animated,
   Dimensions,
   Image,
-  ImageBackground, // ✅ AJOUT DE L'IMPORT MANQUANT
+  ImageBackground,
   Platform,
   RefreshControl,
   SafeAreaView,
@@ -22,11 +22,12 @@ import {
   ViewStyle
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
-import { colors, styles as globalStyles, spacing } from "../styles/indexStyles";
+import { colors, styles as globalStyles, radius, shadows, spacing } from "../styles/indexStyles";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 // ============ TYPES ============
+// ✅ CORRECTION : Retour aux onglets classiques
 type ActiveTab = "feed" | "invest" | "live" | "map" | "mail";
 type GeoFilter = "local" | "france" | "world";
 type IconSize = "sm" | "md" | "lg" | "xl";
@@ -205,29 +206,29 @@ const cardVariantStyles: Record<CardVariant, ViewStyle> = {
 // ============ IMAGE URLS (Unsplash) ============
 const IMAGES = {
   avatars: [
-    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", // 0: Sophie (GreenTech)
-    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", // 1: Marc (MedIA)
-    "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=face", // 2: Lea (ImmoVest)
-    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", // 3: Thomas (FinFlow)
-    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", // 4: Claire (BioFood)
-    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", // 5: Marie Dupont (Nouveau visage)
+    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", 
+    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", 
+    "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=face", 
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", 
+    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", 
+    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
   ],
   startups: [
-    "https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=300&fit=crop", // 0: GreenTech Lyon
-    "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop", // 1: MedIA
-    "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop", // 2: ImmoVest
-    "https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=300&fit=crop", // 3: FinFlow
-    "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=400&fit=crop", // 4: BioFood
-    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop", // 5: VirtualEst
+    "https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=300&fit=crop", // GreenTech
+    "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400&h=300&fit=crop", // MedIA
+    "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop", // ImmoVest
+    "https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=300&fit=crop", 
+    "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=400&fit=crop", 
+    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop", 
   ],
   projects: [
-    "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=400&fit=crop", // GreenTech
-    "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&h=400&fit=crop", // Food/Bio
-    "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop", // Immo
+    "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=400&fit=crop", 
+    "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&h=400&fit=crop", 
+    "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop", 
   ],
   posts: [
-    "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=500&fit=crop", // Panneaux solaires
-    "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=500&fit=crop", // Labo médical
+    "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=500&fit=crop", 
+    "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=500&fit=crop", 
   ],
   lives: [
     "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500&h=300&fit=crop", 
@@ -480,6 +481,7 @@ const Icon: React.FC<{ name: string; size?: IconSize; color?: string }> = ({ nam
     "trending-up": "trending-up",
     "file-text": "file-text",
     "plus-circle": "plus-circle",
+    cpu: "cpu", // SmartCopy
   };
 
   const iconName = iconMap[name] || "circle";
@@ -732,26 +734,23 @@ const AnimatedCard: React.FC<{
   );
 };
 
+// 🔄 STORY ITEM (Redirection OK)
 const StoryItem: React.FC<{ story: Story; index: number }> = ({ story, index }) => {
   const router = useRouter(); 
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const handlePress = () => {
-    // Animation tactile
     Animated.sequence([
       Animated.timing(scaleAnim, { toValue: 0.9, duration: 100, useNativeDriver: true }),
       Animated.timing(scaleAnim, { toValue: 1, duration: 100, useNativeDriver: true }),
     ]).start();
 
-    // ✅ LOGIQUE DE REDIRECTION MISE À JOUR
     if (story.name === "GreenTech Lyon") {
       router.push("/story1");
     } else if (story.name === "MedIA") {
-      // 👉 Redirection vers la Story 2 (MedIA)
       router.push("/story2");
     } else {
       console.log("Ouvrir la story de :", story.name);
-      // Pour les autres, pas de redirection pour l'instant
     }
   };
 
@@ -774,7 +773,6 @@ const StoryItem: React.FC<{ story: Story; index: number }> = ({ story, index }) 
     </TouchableOpacity>
   );
 };
-  
 
 const PostCard: React.FC<{ post: Post; index: number }> = ({ post, index }) => {
   const [liked, setLiked] = useState(post.liked);
@@ -793,10 +791,16 @@ const PostCard: React.FC<{ post: Post; index: number }> = ({ post, index }) => {
   };
 
   const handleImagePress = () => {
+    if (post.author === "GreenTech Lyon") {
+      router.push("/projet1");
+    } else if (post.author === "Marie Dupont") {
+      router.push("/profil");
+    } else if (post.author === "MedIA Diagnostics") {
+      router.push("/projet2");
+    }
   };
 
   const handleAuthorPress = () => {
-    // Redirection vers le profil de l'auteur
     if (post.author === "Marie Dupont") {
       router.push("/profil");
     } else if (post.author === "GreenTech Lyon") {
@@ -917,29 +921,17 @@ const LiveCard: React.FC<{ live: LiveEvent }> = ({ live }) => {
     }
   }, [live.isLive]);
 
-  // ✅ FONCTION DE NAVIGATION SELON L'ID DU LIVE
   const handlePress = () => {
     switch (live.id) {
-      case "1":
-        router.push("/live"); // Pitch Live : Révolution AgriTech
-        break;
-      case "2":
-        router.push("/live2"); // Q&A Investisseurs
-        break;
-      case "3":
-        router.push("/live3"); // Demo Produit : IA Diagnostic
-        break;
-      default:
-        router.push("/live");
+      case "1": router.push("/live"); break;
+      case "2": router.push("/live2"); break;
+      case "3": router.push("/live3"); break;
+      default: router.push("/live");
     }
   };
 
   return (
-    <TouchableOpacity 
-      onPress={handlePress} 
-      activeOpacity={0.9}
-      style={globalStyles.liveCard}
-    >
+    <TouchableOpacity onPress={handlePress} activeOpacity={0.9} style={globalStyles.liveCard}>
       <ImageBackground source={{ uri: live.imageUrl }} style={globalStyles.liveCardImage}>
         <View style={globalStyles.liveCardImageOverlay}>
           <View style={globalStyles.liveCardHeader}>
@@ -976,13 +968,7 @@ const LiveCard: React.FC<{ live: LiveEvent }> = ({ live }) => {
             <Text style={globalStyles.liveDetailText}>{live.interested}</Text>
           </View>
         </View>
-        <Button 
-          label={live.isLive ? "Rejoindre" : "S'inscrire"} 
-          variant={live.isLive ? "primary" : "outline"} 
-          size="sm"
-          fullWidth 
-          onPress={handlePress}
-        />
+        <Button label={live.isLive ? "Rejoindre" : "S'inscrire"} variant={live.isLive ? "primary" : "outline"} size="sm" fullWidth onPress={handlePress} />
       </View>
     </TouchableOpacity>
   );
@@ -990,21 +976,12 @@ const LiveCard: React.FC<{ live: LiveEvent }> = ({ live }) => {
 
 const ReplayCard: React.FC<{ replay: Replay }> = ({ replay }) => {
   const router = useRouter();
-
-  // ✅ FONCTION DE NAVIGATION SELON L'ID DU REPLAY
   const handlePress = () => {
     switch (replay.id) {
-      case "1":
-        router.push("/replay1"); // Comment lever 500K€ en 48h
-        break;
-      case "2":
-        router.push("/replay2"); // Masterclass Valorisation
-        break;
-      case "3":
-        router.push("/replay3"); // Retour d'XP : Notre pivot
-        break;
-      default:
-        router.push("/");
+      case "1": router.push("/replay1"); break;
+      case "2": router.push("/replay2"); break;
+      case "3": router.push("/replay3"); break;
+      default: router.push("/");
     }
   };
 
@@ -1034,6 +1011,71 @@ const ReplayCard: React.FC<{ replay: Replay }> = ({ replay }) => {
         </View>
       </View>
     </TouchableOpacity>
+  );
+};
+
+// 🆕 COMPOSANT SMART COPY TEASER (Cliquable et Premium)
+const SmartCopyTeaser: React.FC = () => {
+  const router = useRouter();
+
+  return (
+    <View style={{ paddingHorizontal: spacing.lg, marginVertical: spacing.lg }}>
+      <TouchableOpacity 
+        activeOpacity={0.9} 
+        onPress={() => router.push("/smartcopy")}
+        style={{ ...shadows.xl }}
+      >
+        <LinearGradient
+          colors={["#0F172A", "#1E293B"]}
+          style={{ 
+            borderRadius: radius.xl, 
+            padding: spacing.xl,
+            borderWidth: 1,
+            borderColor: "rgba(255,255,255,0.1)"
+          }}
+        >
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: spacing.lg }}>
+            <View>
+              <Text style={{ color: "#FFD700", fontWeight: '900', fontSize: 12, marginBottom: 4 }}>NOUVEAU • PREMIUM</Text>
+              <Text style={{ color: colors.white, fontSize: 24, fontWeight: 'bold' }}>Smart Copy™</Text>
+            </View>
+            <View style={{ 
+              width: 48, height: 48, borderRadius: 24, 
+              backgroundColor: "rgba(255,215,0,0.1)", 
+              alignItems: 'center', justifyContent: 'center',
+              borderWidth: 1, borderColor: "rgba(255,215,0,0.3)"
+            }}>
+              <Icon name="cpu" size="lg" color="#FFD700" />
+            </View>
+          </View>
+
+          <Text style={{ color: colors.textSecondary, fontSize: 14, marginBottom: spacing.xl, lineHeight: 20 }}>
+            Débloquez la puissance de l'IA pour analyser les portefeuilles gagnants.
+            Scores de confiance, mouvements des whales et clusters sectoriels.
+          </Text>
+
+          <View style={{ flexDirection: 'row', gap: spacing.sm, marginBottom: spacing.xl }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: "rgba(255,255,255,0.05)", paddingHorizontal: 10, paddingVertical: 6, borderRadius: radius.md }}>
+              <Icon name="trending-up" size="sm" color={colors.success} />
+              <Text style={{ color: colors.white, fontSize: 12, fontWeight: '600' }}>+24% Croissance</Text>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: "rgba(255,255,255,0.05)", paddingHorizontal: 10, paddingVertical: 6, borderRadius: radius.md }}>
+              <Icon name="users" size="sm" color="#3B82F6" />
+              <Text style={{ color: colors.white, fontSize: 12, fontWeight: '600' }}>Top Investisseurs</Text>
+            </View>
+          </View>
+
+          <Button 
+            label="Accéder au terminal" 
+            variant="primary" 
+            fullWidth 
+            icon="arrow" 
+            iconPosition="right"
+            onPress={() => router.push("/smartcopy")}
+          />
+        </LinearGradient>
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -1201,7 +1243,6 @@ const SimpleChart: React.FC = () => {
   );
 };
 
-// MapPreview MODIFIÉ pour accepter une fonction de navigation
 const MapPreview: React.FC<{ geoFilter: GeoFilter; onExplore?: () => void }> = ({ geoFilter, onExplore }) => (
   <View style={globalStyles.mapPreview}>
     <View style={globalStyles.mapContainer}>
@@ -1283,7 +1324,6 @@ const TrendingCard: React.FC<{ item: TrendingItem; rank: number }> = ({ item, ra
   const router = useRouter();
 
   const handlePress = () => {
-    // Redirection selon le rang
     if (rank === 1) {
       router.push("/projet1");
     } else if (rank === 2) {
@@ -1313,7 +1353,6 @@ const TrendingCard: React.FC<{ item: TrendingItem; rank: number }> = ({ item, ra
   );
 };
 
-// ============ SMART FAB COMPONENT (CORRIGÉ & COMPLET) ============
 const SmartActionFAB: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const animation = useRef(new Animated.Value(0)).current;
@@ -1380,12 +1419,10 @@ const SmartActionFAB: React.FC = () => {
             fabStyles.overlay, 
             { opacity: overlayOpacity },
           ]} 
-          // Permet de cliquer à travers l'overlay s'il est invisible
           pointerEvents={isOpen ? "auto" : "none"} 
         />
       </TouchableWithoutFeedback>
 
-      {/* box-none permet de cliquer à travers le conteneur vide */}
       <View style={fabStyles.container} pointerEvents="box-none">
         <View style={fabStyles.actionsContainer} pointerEvents={isOpen ? "auto" : "none"}>
           {actions.map((action, index) => {
@@ -1458,20 +1495,18 @@ const SmartActionFAB: React.FC = () => {
 
 // ============ MAIN COMPONENT ============
 const Index: React.FC = () => {
-  const router = useRouter(); // Hook de navigation Expo Router
+  const router = useRouter(); 
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("feed");
   const [geoFilter, setGeoFilter] = useState<GeoFilter>("france");
   const [mailTab, setMailTab] = useState<"inbox" | "reports" | "notifications">("inbox");
   const [searchQuery, setSearchQuery] = useState("");
   
-  // États pour scroll & refresh
   const [refreshing, setRefreshing] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const scrollViewRef = useRef<ScrollView>(null);
   const scrollY = useRef(new Animated.Value(0)).current;
 
-  // Refresh Logic
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
@@ -1479,12 +1514,10 @@ const Index: React.FC = () => {
     }, 2000);
   }, []);
 
-  // Scroll To Top Logic
   const scrollToTop = () => {
     scrollViewRef.current?.scrollTo({ y: 0, animated: true });
   };
 
-  // Handler du Scroll pour afficher le bouton retour en haut
   const handleScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
     {
@@ -1509,6 +1542,7 @@ const Index: React.FC = () => {
   const variationPercent = (totalVariation / (totalInvested - totalVariation)) * 100;
   const unreadMailCount = MOCK_MAILS.filter((m) => !m.read).length;
 
+  // ✅ CORRECTION : Retour aux onglets standards (Plus de "Smart Copy" ici)
   const tabs: { key: ActiveTab; label: string }[] = [
     { key: "feed", label: "Feed" },
     { key: "invest", label: "Investir" },
@@ -1529,7 +1563,6 @@ const Index: React.FC = () => {
     { key: "notifications", label: "Alertes" },
   ];
 
-  // ===== HEADER =====
   const renderHeader = () => {
     const safeTopPadding = Platform.OS === 'android' ? (StatusBar.currentHeight || 24) + 20 : 60;
     
@@ -1732,6 +1765,10 @@ const Index: React.FC = () => {
     <View style={globalStyles.feedContent}>
       {renderStories()}
       {renderQuickStats()}
+      
+      {/* ✅ AJOUT DU TEASER SMART COPY ICI (Bien Visible) */}
+      <SmartCopyTeaser />
+
       {renderTrending()}
       <SectionHeader title="Fil d'actualité" action="Actualiser" />
       {MOCK_POSTS.map((post, index) => (
@@ -1791,6 +1828,7 @@ const Index: React.FC = () => {
     </View>
   );
 
+  // ✅ RESTAURATION DU CONTENU LIVE
   const renderLiveReplayContent = () => (
     <View style={globalStyles.liveReplaySection}>
       <SectionHeader title="En direct" subtitle="Rejoignez les présentations" action="Tous les lives" />
@@ -1905,9 +1943,6 @@ const Index: React.FC = () => {
               <Icon name="sparkle" size="xl" color={colors.textTertiary} />
             </View>
             <Text style={globalStyles.placeholderTitle}>Bientôt disponible</Text>
-            <Text style={globalStyles.placeholderText}>
-              Cette fonctionnalité arrive très prochainement. Restez connecté !
-            </Text>
             <Button label="Retour au feed" variant="outline" icon="arrow-left" />
           </View>
         );
@@ -1935,7 +1970,7 @@ const Index: React.FC = () => {
       <Animated.ScrollView 
         ref={scrollViewRef}
         style={globalStyles.scrollView}
-        contentContainerStyle={[globalStyles.scrollViewContent, { paddingBottom: 100 }]} // Padding extra pour le FAB
+        contentContainerStyle={[globalStyles.scrollViewContent, { paddingBottom: 100 }]}
         showsVerticalScrollIndicator={false}
         onScroll={handleScroll}
         scrollEventThrottle={16}
@@ -1966,7 +2001,6 @@ const Index: React.FC = () => {
         </View>
       </Animated.ScrollView>
       
-      {/* Boutons flottants */}
       {renderScrollTopButton()}
       <SmartActionFAB />
       
@@ -2058,8 +2092,8 @@ const fabStyles = StyleSheet.create({
 const scrollTopStyles = StyleSheet.create({
   button: {
     position: "absolute",
-    bottom: 110, // Juste au-dessus du Smart FAB
-    right: 28,   // Alignement visuel avec le centre du FAB
+    bottom: 110,
+    right: 28,
     width: 48,
     height: 48,
     borderRadius: 24,
